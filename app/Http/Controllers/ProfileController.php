@@ -2,43 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserListingResource;
 use App\Models\User;
+use App\Repositories\UserRepository;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
-
-use App\Services\ImageService;
 
 class ProfileController extends Controller
 {
     protected $imageService;
 
-    public function __construct(ImageService $imageService)
-    {
+    public function __construct(
+        ImageService $imageService,
+        public readonly UserRepository $userRepository
+    ) {
         $this->imageService = $imageService;
     }
+
     public function show(Request $request, $username)
     {
         $user = User::where('username', $username)
             ->with([
-                'repos' => fn($q) => $q->latest(),
-                'posts' => fn($q) => $q->withCount('likes')
-                    ->withExists(['likes as is_liked' => function($query) {
+                'repos' => fn ($q) => $q->latest(),
+                'posts' => fn ($q) => $q->withCount('likes')
+                    ->withExists(['likes as is_liked' => function ($query) {
                         $query->where('user_id', Auth::id());
                     }])
-                    ->latest()
+                    ->latest(),
             ])
             ->withCount(['followers', 'following', 'posts'])
             ->firstOrFail();
 
-        $isFollowing = Auth::check() 
+        $isFollowing = Auth::check()
             ? Auth::user()->following()->where('following_id', $user->id)->exists()
             : false;
 
         $featuredRepos = $user->repos()->where('is_featured', true)->latest()->take(3)->get();
         $latestPost = $user->posts()
             ->withCount('likes')
-            ->withExists(['likes as is_liked' => function($query) {
+            ->withExists(['likes as is_liked' => function ($query) {
                 $query->where('user_id', Auth::id());
             }])
             ->latest()
@@ -70,7 +74,7 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         $user = Auth::user();
-        
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'bio' => 'nullable|string|max:120',
@@ -87,14 +91,14 @@ class ProfileController extends Controller
                 'avatars',
                 80
             );
-            $user->avatar_url = asset('storage/' . $path);
+            $user->avatar_url = asset('storage/'.$path);
         } elseif ($request->filled('avatar_url')) {
             $user->avatar_url = $request->avatar_url;
         }
 
         $user->name = $validated['name'];
         $user->bio = $validated['bio'] ?? null;
-        
+
         if ($request->has('social_links')) {
             $user->social_links = $validated['social_links'] ?? [];
         }
@@ -109,8 +113,10 @@ class ProfileController extends Controller
         $user = Auth::user();
         if ($user->github_avatar_url) {
             $user->update(['avatar_url' => $user->github_avatar_url]);
+
             return back()->with('success', 'تمت استعادة الصورة الرمزية من GitHub');
         }
+
         return back()->with('error', 'لا يوجد صورة رمزية سابقة من GitHub');
     }
 
@@ -133,7 +139,7 @@ class ProfileController extends Controller
     public function downloadData()
     {
         $user = Auth::user()->load(['repos', 'posts', 'followers', 'following']);
-        
+
         $data = [
             'user_info' => $user->toArray(),
             'repos' => $user->repos->toArray(),
@@ -144,14 +150,36 @@ class ProfileController extends Controller
         ];
 
         return response()->json($data, 200, [
-            'Content-Disposition' => 'attachment; filename="codex_data_' . $user->username . '.json"',
+            'Content-Disposition' => 'attachment; filename="codex_data_'.$user->username.'.json"',
+        ]);
+    }
+
+    public function explore()
+    {
+        $users = $this->userRepository->filterForUser(null, [])->with(['following'])->paginate(10)->withQueryString();
+        $usersCollection = UserListingResource::collection($users);
+
+
+        $topRepos = \App\Models\Repo::where('is_own_repo', true)
+            ->whereHas('user', function($q) {
+                $q->where('is_verified', true);
+            })
+            ->orderBy('stars', 'desc')
+            ->with('user')
+            ->take(10)
+            ->get();
+
+        
+        return Inertia::render('Users/List', [
+            'users' => $usersCollection,
+            'topRepos' => $topRepos,
         ]);
     }
 
     public function destroy(Request $request)
     {
         $request->validate([
-            'password' => ['nullable', 'current_password'], 
+            'password' => ['nullable', 'current_password'],
         ]);
 
         $user = Auth::user();

@@ -23,7 +23,7 @@ import {
 import { Users, FileText, GitBranch, CheckCircle, ExternalLink, Check, X, MoreVertical, Ban, Trash2, ShieldCheck, ShieldOff, ArrowUpDown, Search } from 'lucide-react';
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
-import Pagination from '@/Components/Pagination';
+import Pagination from '@/components/Pagination';
 
 export default function Dashboard({ stats, users, filters }) {
     const [selectedUsers, setSelectedUsers] = useState([]);
