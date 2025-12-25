@@ -49,7 +49,7 @@ bun run build
 # 5. Sync to Live Directory
 echo "🔄 Syncing files to live directory: $SITE_DIR"
 # Exclusion list to avoid overwriting or deleting persistent directories
-rsync -avz --delete --exclude='.git' --exclude='node_modules' --exclude='vendor' --exclude='storage' --exclude='.env' ./ "$SITE_DIR/"
+rsync -avz --delete --exclude='.git' --exclude='node_modules' --exclude='storage' --exclude='.env' ./ "$SITE_DIR/"
 
 # 6. Optimization & Cleanup (In the live directory)
 echo "🧹 Clearing and caching in live directory..."
