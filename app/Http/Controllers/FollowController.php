@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Notifications\NewFollower;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class FollowController extends Controller
 {
-    public function store(User $user)
+    public function store(Request $request, User $user)
     {
         $authUser = Auth::user();
 
@@ -23,6 +23,9 @@ class FollowController extends Controller
             $authUser->following()->attach($user->id);
             $user->notify(new NewFollower($authUser));
         }
+
+        // Keep sidebar recommendations stable after follow/unfollow to allow immediate undo
+        $request->session()->put('feed_keep_recommendations', true);
 
         return back();
     }

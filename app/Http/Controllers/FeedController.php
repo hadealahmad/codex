@@ -14,6 +14,9 @@ class FeedController extends Controller
         $user = Auth::user();
         $tab = $request->query('tab', 'global');
 
+        // Preload following ids once to reuse across queries
+        $followingIds = $user ? $user->following()->pluck('users.id') : collect();
+
         if ($tab === 'following' && !$user) {
             return redirect()->route('login');
         }
@@ -29,29 +32,29 @@ class FeedController extends Controller
             }]);
 
         if ($tab === 'following') {
-            $followingIds = $user->following()->pluck('users.id');
-            $followingIds->push($user->id);
-            $query->whereIn('user_id', $followingIds);
+            $query->whereIn('user_id', $followingIds->concat([$user->id]));
         }
 
         $posts = $query->latest()->paginate(10)->withQueryString();
 
-        // Sidebar data - Stable recommendations within the same session
-        // Force session regeneration to ensure persistence
-        if (!$request->session()->has('_token')) {
-            $request->session()->regenerate();
-        }
-        
+        // Sidebar data - randomize on full reload, keep stable on follow actions
         $recommendedIds = $request->session()->get('feed_recommended_ids', []);
-        
-        // If empty or invalid, fetch new ones
-        if (empty($recommendedIds) || !is_array($recommendedIds)) {
+        $keepRecommendations = $request->boolean('keep_recommendations')
+            || $request->session()->pull('feed_keep_recommendations', false);
+
+        $shouldRegenerate = !$keepRecommendations || empty($recommendedIds) || !is_array($recommendedIds);
+
+        if ($shouldRegenerate) {
             $recommendedIds = \App\Models\User::where('is_verified', true)
                 ->where('id', '!=', $user ? $user->id : 0)
+                ->when($followingIds->isNotEmpty(), function($q) use ($followingIds) {
+                    $q->whereNotIn('id', $followingIds);
+                })
                 ->inRandomOrder()
                 ->take(5)
                 ->pluck('id')
                 ->toArray();
+
             $request->session()->put('feed_recommended_ids', $recommendedIds);
         }
 
