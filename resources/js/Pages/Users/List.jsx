@@ -11,6 +11,8 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from 'sonner';
 import TopProjects from '@/components/TopProjects.jsx';
 
+import { show } from '@/actions/App/Http/Controllers/ProfileController';
+
 
 export default function ExploreUsers({ users, topRepos, auth }) {
 
@@ -29,7 +31,7 @@ export default function ExploreUsers({ users, topRepos, auth }) {
                         {users.data.map((user) => (
                             <Link
                                 key={user.id}
-                                href={String(user.id)} // Assuming this links to profile, currently just ID based on existing code
+                                href={show(user.username)} // Assuming this links to profile, currently just ID based on existing code
                                 className="flex gap-4 p-4 hover:bg-muted/50 transition-colors cursor-pointer group"
                             >
                                 <Avatar className="w-12 h-12 border">
