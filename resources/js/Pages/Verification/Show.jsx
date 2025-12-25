@@ -51,7 +51,7 @@ export default function Show({ token, status }) {
                                         <Button
                                             onClick={(e) => {
                                                 e.preventDefault();
-                                                post(route('verification.scan'));
+                                                post('/verification/scan');
                                             }}
                                             disabled={processing}
                                             className="w-full bg-blue-600 hover:bg-blue-700 text-white"
