@@ -44,4 +44,26 @@ class VerificationController extends Controller
 
         return back()->with('success', 'جارٍ التحقق من Gist...');
     }
+
+    public function checkGists(Request $request, \App\Services\GistVerificationService $gistService)
+    {
+        $user = Auth::user();
+        $verification = Verification::where('user_id', $user->id)
+            ->where('status', 'pending')
+            ->firstOrFail();
+
+        $foundGistUrl = $gistService->findVerificationGist($user, $verification->token);
+
+        if ($foundGistUrl) {
+            $verification->update([
+                'gist_url' => $foundGistUrl,
+                'status' => 'approved'
+            ]);
+            $user->update(['is_verified' => true]);
+
+            return back()->with('success', 'تم العثور على Gist وتوثيق حسابك بنجاح! 🎉');
+        }
+
+        return back()->with('error', 'لم يتم العثور على كود التوثيق في أي Gist حديثة. تأكد من نشره بشكل صحيح.');
+    }
 }

@@ -15,6 +15,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware('auth')->group(function () {
     Route::get('/verification', [VerificationController::class, 'show'])->name('verification.show');
     Route::post('/verification', [VerificationController::class, 'store'])->name('verification.store');
+    Route::post('/verification/scan', [VerificationController::class, 'checkGists'])->name('verification.scan');
     
     // Repositories
     Route::resource('repos', \App\Http\Controllers\RepoController::class)->only(['store', 'update', 'destroy']);

@@ -46,22 +46,46 @@ export default function Show({ token, status }) {
                                     </div>
                                 </div>
 
-                                <form onSubmit={submit} className="space-y-4 pt-4">
-                                    <div className="space-y-2">
-                                        <Label htmlFor="gist_url">2. ألصق رابط الـ Gist هنا:</Label>
-                                        <Input
-                                            id="gist_url"
-                                            placeholder="https://gist.github.com/username/..."
-                                            value={data.gist_url}
-                                            onChange={(e) => setData('gist_url', e.target.value)}
-                                            required
-                                        />
-                                        {errors.gist_url && <p className="text-red-500 text-sm">{errors.gist_url}</p>}
+                                <div className="space-y-4 pt-4">
+                                    <div className="flex gap-4 items-center">
+                                        <Button
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                post(route('verification.scan'));
+                                            }}
+                                            disabled={processing}
+                                            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                                        >
+                                            {processing ? 'جاري الفحص...' : 'فحص Gists تلقائياً ⚡️'}
+                                        </Button>
                                     </div>
-                                    <Button type="submit" className="w-full cursor-pointer" disabled={processing}>
-                                        {processing ? 'جاري التحقق...' : 'تحقق الآن'}
-                                    </Button>
-                                </form>
+
+                                    <div className="relative">
+                                        <div className="absolute inset-0 flex items-center">
+                                            <span className="w-full border-t" />
+                                        </div>
+                                        <div className="relative flex justify-center text-xs uppercase">
+                                            <span className="bg-background px-2 text-muted-foreground">أو أدخل الرابط يدوياً</span>
+                                        </div>
+                                    </div>
+
+                                    <form onSubmit={submit} className="space-y-4">
+                                        <div className="space-y-2">
+                                            <Label htmlFor="gist_url">2. ألصق رابط الـ Gist هنا:</Label>
+                                            <Input
+                                                id="gist_url"
+                                                placeholder="https://gist.github.com/username/..."
+                                                value={data.gist_url}
+                                                onChange={(e) => setData('gist_url', e.target.value)}
+                                                required
+                                            />
+                                            {errors.gist_url && <p className="text-red-500 text-sm">{errors.gist_url}</p>}
+                                        </div>
+                                        <Button type="submit" variant="outline" className="w-full" disabled={processing}>
+                                            تحقق يدوياً
+                                        </Button>
+                                    </form>
+                                </div>
                             </>
                         )}
                     </CardContent>
