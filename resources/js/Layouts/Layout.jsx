@@ -15,9 +15,9 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { User, LogOut, LayoutDashboard, PlusSquare, Bell, Edit2, FolderPlus } from 'lucide-react';
-import NotificationBox from '@/components/NotificationBox';
-import { ModeToggle } from '@/components/ModeToggle';
-import AddRepoDialog from '@/components/AddRepoDialog';
+import NotificationBox from '@/components/NotificationBox.jsx';
+import { ModeToggle } from '@/components/ModeToggle.jsx';
+import AddRepoDialog from '@/components/AddRepoDialog.jsx';
 
 export default function Layout({ children }) {
     const { auth, flash } = usePage().props;

@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Users, FileText, GitBranch, CheckCircle, ExternalLink, Star, Trash2, ArrowUpDown, Search, X } from 'lucide-react';
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
-import Pagination from '@/components/Pagination';
+import Pagination from '@/components/Pagination.jsx';
 import {
     Select,
     SelectContent,
