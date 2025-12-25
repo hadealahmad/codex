@@ -14,6 +14,13 @@ class VerificationController extends Controller
     public function show()
     {
         $user = Auth::user();
+
+        if ($user->is_verified) {
+            return Inertia::render('Verification/Show', [
+                'token' => null,
+                'status' => 'approved',
+            ]);
+        }
         
         // Find or create a pending verification to keep the same token
         $verification = Verification::firstOrCreate(
