@@ -47,18 +47,6 @@ export default function Show({ token, status }) {
                                 </div>
 
                                 <div className="space-y-4 pt-4">
-                                    <div className="flex gap-4 items-center">
-                                        <Button
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                post('/verification/scan');
-                                            }}
-                                            disabled={processing}
-                                            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                                        >
-                                            {processing ? 'جاري الفحص...' : 'فحص Gists تلقائياً ⚡️'}
-                                        </Button>
-                                    </div>
 
                                     <div className="space-y-4 pt-4">
                                         <div className="flex gap-4 items-center">
