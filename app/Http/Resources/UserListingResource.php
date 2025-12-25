@@ -17,7 +17,7 @@ class UserListingResource extends JsonResource
         $attr = array_intersect_key($this->resource->toArray($request), array_flip($keep));
 
         $array = array_merge($attr, [
-            'is_following' => $this->resource->isFollowing($request->user() ? $request->user()->id : null),
+            'is_following' => $request->user() ? $this->resource->isFollowing($request->user()->id) : false,
         ]);
 
         return $array;

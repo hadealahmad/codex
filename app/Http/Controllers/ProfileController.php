@@ -156,7 +156,7 @@ class ProfileController extends Controller
 
     public function explore()
     {
-        $users = $this->userRepository->filterForUser(null, [])->with(['following'])->paginate(10)->withQueryString();
+        $users = $this->userRepository->filterForUser(null, [])->with(['followers', 'following'])->paginate(10)->withQueryString();
         $usersCollection = UserListingResource::collection($users);
 
 
