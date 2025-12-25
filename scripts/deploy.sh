@@ -54,9 +54,7 @@ rsync -avz --delete --exclude='.git' --exclude='node_modules' --exclude='vendor'
 # 6. Optimization & Cleanup (In the live directory)
 echo "🧹 Clearing and caching in live directory..."
 cd "$SITE_DIR"
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
+php artisan optimize:clear
 php artisan optimize
 
 # 7. Restart Workers
