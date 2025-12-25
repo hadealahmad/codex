@@ -81,6 +81,13 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
     }
 
+    public function scopeIsFollowing($query, int $user_id)
+    {
+        return $query->whereHas('following', function ($query) use ($user_id) {
+            $query->where('following_id', $user_id);
+        });
+    }
+
     public function posts()
     {
         return $this->hasMany(Post::class);

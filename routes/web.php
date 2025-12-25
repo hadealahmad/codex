@@ -1,26 +1,28 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\VerificationController;
 
 Route::get('/', [\App\Http\Controllers\FeedController::class, 'index'])->name('home');
 Route::get('/feed', [\App\Http\Controllers\FeedController::class, 'index'])->name('feed');
 
 Route::get('/auth/github/redirect', [AuthController::class, 'redirect'])->name('login');
 Route::get('/auth/github/callback', [AuthController::class, 'callback']);
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-use App\Http\Controllers\VerificationController;
 Route::middleware('auth')->group(function () {
     Route::get('/verification', [VerificationController::class, 'show'])->name('verification.show');
     Route::post('/verification', [VerificationController::class, 'store'])->name('verification.store');
     
+    // Repositories
     Route::resource('repos', \App\Http\Controllers\RepoController::class)->only(['store', 'update', 'destroy']);
     Route::post('/repos/import', [\App\Http\Controllers\RepoController::class, 'import'])->name('repos.import');
     Route::post('/repos/{repo}/toggle-feature', [\App\Http\Controllers\RepoController::class, 'toggleFeature'])->name('repos.toggle-feature');
     Route::post('/repos/{repo}/refresh-verification', [\App\Http\Controllers\RepoController::class, 'refreshVerification'])->name('repos.refresh-verification');
 
+    // Posts
     Route::get('/posts/create', [\App\Http\Controllers\PostController::class, 'create'])->name('posts.create');
     Route::post('/posts', [\App\Http\Controllers\PostController::class, 'store'])->name('posts.store');
     Route::get('/posts/{post}/edit', [\App\Http\Controllers\PostController::class, 'edit'])->name('posts.edit');
@@ -30,8 +32,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/posts/{post}/comments', [\App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
     Route::delete('/comments/{comment}', [\App\Http\Controllers\CommentController::class, 'destroy'])->name('comments.destroy');
 
+    // Follows
     Route::post('/users/{user}/follow', [\App\Http\Controllers\FollowController::class, 'store'])->name('users.follow');
     
+    // Notifications
     Route::get('/notifications', [\App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
     Route::get('/notifications/recent', [\App\Http\Controllers\NotificationController::class, 'recent'])->name('notifications.recent');
     Route::post('/notifications/{id}/read', [\App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('notifications.read');
@@ -44,6 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [\App\Http\Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Admin
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\AdminController::class, 'index'])->name('dashboard');
     Route::post('/verifications/{id}/approve', [\App\Http\Controllers\AdminController::class, 'approveVerification'])->name('verifications.approve');
@@ -68,3 +73,4 @@ Route::get('/@{username}/repos', [\App\Http\Controllers\RepoController::class, '
 Route::get('/@{username}/blog', [\App\Http\Controllers\PostController::class, 'userBlog'])->name('posts.user_blog');
 Route::get('/@{username}', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
 Route::get('/u/{username}/{slug}', [\App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
+Route::get('/u/explore', [\App\Http\Controllers\ProfileController::class, 'explore'])->name('users.explore');
