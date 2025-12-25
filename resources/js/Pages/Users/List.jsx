@@ -54,7 +54,7 @@ export default function ExploreUsers({ users, topRepos, auth }) {
                                         </div>
 
                                         {/* Action Button - Stop propagation to prevent clicking the row when clicking button */}
-                                        {user.id !== auth.user.id && (
+                                        {user.id !== auth?.user?.id && (
                                             <div onClick={(e) => e.preventDefault()}>
                                                 <Button
                                                     variant={user.is_following ? "outline" : "default"}
