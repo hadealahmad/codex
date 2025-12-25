@@ -1,6 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
-* @see vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemServiceProvider.php:98
+* @see [serialized-closure]:2
 * @route '/storage/{path}'
 */
 export const local = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -14,7 +14,7 @@ local.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemServiceProvider.php:98
+* @see [serialized-closure]:2
 * @route '/storage/{path}'
 */
 local.url = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -40,7 +40,7 @@ local.url = (args: { path: string | number } | [path: string | number ] | string
 }
 
 /**
-* @see vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemServiceProvider.php:98
+* @see [serialized-closure]:2
 * @route '/storage/{path}'
 */
 local.get = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -49,7 +49,7 @@ local.get = (args: { path: string | number } | [path: string | number ] | string
 })
 
 /**
-* @see vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemServiceProvider.php:98
+* @see [serialized-closure]:2
 * @route '/storage/{path}'
 */
 local.head = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({

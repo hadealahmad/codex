@@ -10,6 +10,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { toast } from 'sonner';
 import TopProjects from '@/components/TopProjects.jsx';
+import UserHoverCard from '@/components/UserHoverCard.jsx';
 
 export default function Feed({ posts, tab, recommendedUsers, topRepos }) {
     const { auth } = usePage().props;
@@ -243,22 +244,28 @@ export default function Feed({ posts, tab, recommendedUsers, topRepos }) {
                             {recommendedUsers.map(user => (
                                 <div key={user.id} className="flex items-center justify-between group">
                                     <div className="flex items-center gap-3 min-w-0">
-                                        <Link href={`/@${user.username}`}>
-                                            <Avatar className="w-10 h-10 border-2 border-background shadow-sm">
-                                                <AvatarImage src={user.avatar_url} />
-                                                <AvatarFallback>{user.username[0].toUpperCase()}</AvatarFallback>
-                                            </Avatar>
-                                        </Link>
+                                        <UserHoverCard user={user}>
+                                            <Link href={`/@${user.username}`}>
+                                                <Avatar className="w-10 h-10 border-2 border-background shadow-sm">
+                                                    <AvatarImage src={user.avatar_url} />
+                                                    <AvatarFallback>{user.username[0].toUpperCase()}</AvatarFallback>
+                                                </Avatar>
+                                            </Link>
+                                        </UserHoverCard>
                                         <div className="min-w-0 text-right">
                                             <div className="flex items-center justify-start gap-1.5">
                                                 {user.is_verified && (
                                                     <span className="text-blue-500 text-[9px] bg-blue-50 px-1 rounded flex-shrink-0 order-2">موثق</span>
                                                 )}
-                                                <Link href={`/@${user.username}`} className="font-bold text-sm hover:underline block truncate leading-tight order-1">
-                                                    {user.name}
-                                                </Link>
+                                                <UserHoverCard user={user}>
+                                                    <Link href={`/@${user.username}`} className="font-bold text-sm hover:underline block truncate leading-tight order-1">
+                                                        {user.name}
+                                                    </Link>
+                                                </UserHoverCard>
                                             </div>
-                                            <p className="text-[10px] text-muted-foreground truncate" dir="ltr">@{user.username}</p>
+                                            <UserHoverCard user={user}>
+                                                <p className="text-[10px] text-muted-foreground truncate cursor-pointer" dir="ltr">@{user.username}</p>
+                                            </UserHoverCard>
                                         </div>
                                     </div>
                                     <Button
