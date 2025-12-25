@@ -9,7 +9,7 @@ import Markdown from 'react-markdown';
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { toast } from 'sonner';
-import TopProjects from '@/components/TopProjects';
+import TopProjects from '@/components/TopProjects.jsx';
 
 export default function Feed({ posts, tab, recommendedUsers, topRepos }) {
     const { auth } = usePage().props;
