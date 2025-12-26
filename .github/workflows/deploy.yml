@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted # This points to your Virtualmin self-hosted runner
+    runs-on: [self-hosted, codex]
 
     steps:
       - name: Checkout code
