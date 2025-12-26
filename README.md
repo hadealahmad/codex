@@ -33,7 +33,7 @@ Before starting, please ensure you have the following installed on your machine:
 - [PHP](https://www.php.net/) (8.2 or higher)
 - [Composer](https://getcomposer.org/)
 - [Bun](https://bun.sh/) (or Node.js)
-- A running database server (e.g., MySQL)
+- A running database server we use MySQL for production
 
 ### Installation Steps
 
