@@ -482,7 +482,7 @@ export default function Show({ profile, activeTab }) {
                                                 جديد
                                             </Badge>
                                             <span className="text-[10px] text-muted-foreground font-medium">
-                                                {new Date(profile.latest_post.published_at).toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' })}
+                                                {new Date(profile.latest_post.published_at).toLocaleDateString('ar-SY', { year: 'numeric', month: 'long', day: 'numeric' })}
                                             </span>
                                         </div>
                                         <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors line-clamp-2 leading-tight">

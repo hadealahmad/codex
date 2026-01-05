@@ -71,7 +71,7 @@ export default function UserBlog({ user, posts }) {
                                     <div className="flex items-center gap-2 text-xs font-medium text-primary/80">
                                         <Calendar className="w-3.5 h-3.5" />
                                         <time dateTime={post.published_at}>
-                                            {new Date(post.published_at).toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' })}
+                                            {new Date(post.published_at).toLocaleDateString('ar-SY', { year: 'numeric', month: 'long', day: 'numeric' })}
                                         </time>
                                     </div>
 

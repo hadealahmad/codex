@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\VerificationController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', [\App\Http\Controllers\FeedController::class, 'index'])->name('home');
 Route::get('/feed', [\App\Http\Controllers\FeedController::class, 'index'])->name('feed');
@@ -16,7 +16,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/verification', [VerificationController::class, 'show'])->name('verification.show');
     Route::post('/verification', [VerificationController::class, 'store'])->name('verification.store');
     Route::post('/verification/scan', [VerificationController::class, 'checkGists'])->name('verification.scan');
-    
+
     // Repositories
     Route::resource('repos', \App\Http\Controllers\RepoController::class)->only(['store', 'update', 'destroy']);
     Route::post('/repos/import', [\App\Http\Controllers\RepoController::class, 'import'])->name('repos.import');
@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
 
     // Follows
     Route::post('/users/{user}/follow', [\App\Http\Controllers\FollowController::class, 'store'])->name('users.follow');
-    
+
     // Notifications
     Route::get('/notifications', [\App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
     Route::get('/notifications/recent', [\App\Http\Controllers\NotificationController::class, 'recent'])->name('notifications.recent');
@@ -54,21 +54,20 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/dashboard', [\App\Http\Controllers\AdminController::class, 'index'])->name('dashboard');
     Route::post('/verifications/{id}/approve', [\App\Http\Controllers\AdminController::class, 'approveVerification'])->name('verifications.approve');
     Route::post('/verifications/{id}/reject', [\App\Http\Controllers\AdminController::class, 'rejectVerification'])->name('verifications.reject');
-    
+
     Route::post('/users/{id}/verify', [\App\Http\Controllers\AdminController::class, 'verifyUser'])->name('users.verify');
     Route::post('/users/{id}/unverify', [\App\Http\Controllers\AdminController::class, 'unverifyUser'])->name('users.unverify');
     Route::post('/users/{id}/ban', [\App\Http\Controllers\AdminController::class, 'banUser'])->name('users.ban');
     Route::post('/users/{id}/unban', [\App\Http\Controllers\AdminController::class, 'unbanUser'])->name('users.unban');
     Route::delete('/users/{id}', [\App\Http\Controllers\AdminController::class, 'deleteUser'])->name('users.delete');
     Route::post('/users/bulk-action', [\App\Http\Controllers\AdminController::class, 'bulkAction'])->name('users.bulk-action');
-    
-    Route::get('/posts', [\App\Http\Controllers\AdminController::class, 'posts'])->name('posts');
-    Route::delete('/posts/{id}', [\App\Http\Controllers\AdminController::class, 'deletePost'])->name('posts.delete');
-    
+
+    //    Route::get('/posts', [\App\Http\Controllers\AdminController::class, 'posts'])->name('posts');
+    //    Route::delete('/posts/{id}', [\App\Http\Controllers\AdminController::class, 'deletePost'])->name('posts.delete');
+    //
     Route::get('/repos', [\App\Http\Controllers\AdminController::class, 'repos'])->name('repos');
     Route::delete('/repos/{id}', [\App\Http\Controllers\AdminController::class, 'deleteRepo'])->name('repos.delete');
 });
-
 
 Route::get('/@{username}/repos', [\App\Http\Controllers\RepoController::class, 'userRepos'])->name('repos.user_repos');
 Route::get('/@{username}/blog', [\App\Http\Controllers\PostController::class, 'userBlog'])->name('posts.user_blog');

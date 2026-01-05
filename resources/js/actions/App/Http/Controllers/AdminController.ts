@@ -442,102 +442,6 @@ bulkAction.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\AdminController::posts
-* @see app/Http/Controllers/AdminController.php:65
-* @route '/admin/posts'
-*/
-export const posts = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: posts.url(options),
-    method: 'get',
-})
-
-posts.definition = {
-    methods: ["get","head"],
-    url: '/admin/posts',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \App\Http\Controllers\AdminController::posts
-* @see app/Http/Controllers/AdminController.php:65
-* @route '/admin/posts'
-*/
-posts.url = (options?: RouteQueryOptions) => {
-    return posts.definition.url + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\AdminController::posts
-* @see app/Http/Controllers/AdminController.php:65
-* @route '/admin/posts'
-*/
-posts.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: posts.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\AdminController::posts
-* @see app/Http/Controllers/AdminController.php:65
-* @route '/admin/posts'
-*/
-posts.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: posts.url(options),
-    method: 'head',
-})
-
-/**
-* @see \App\Http\Controllers\AdminController::deletePost
-* @see app/Http/Controllers/AdminController.php:224
-* @route '/admin/posts/{id}'
-*/
-export const deletePost = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
-    url: deletePost.url(args, options),
-    method: 'delete',
-})
-
-deletePost.definition = {
-    methods: ["delete"],
-    url: '/admin/posts/{id}',
-} satisfies RouteDefinition<["delete"]>
-
-/**
-* @see \App\Http\Controllers\AdminController::deletePost
-* @see app/Http/Controllers/AdminController.php:224
-* @route '/admin/posts/{id}'
-*/
-deletePost.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
-    if (typeof args === 'string' || typeof args === 'number') {
-        args = { id: args }
-    }
-
-    if (Array.isArray(args)) {
-        args = {
-            id: args[0],
-        }
-    }
-
-    args = applyUrlDefaults(args)
-
-    const parsedArgs = {
-        id: args.id,
-    }
-
-    return deletePost.definition.url
-            .replace('{id}', parsedArgs.id.toString())
-            .replace(/\/+$/, '') + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\AdminController::deletePost
-* @see app/Http/Controllers/AdminController.php:224
-* @route '/admin/posts/{id}'
-*/
-deletePost.delete = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
-    url: deletePost.url(args, options),
-    method: 'delete',
-})
-
-/**
 * @see \App\Http\Controllers\AdminController::repos
 * @see app/Http/Controllers/AdminController.php:98
 * @route '/admin/repos'
@@ -633,6 +537,6 @@ deleteRepo.delete = (args: { id: string | number } | [id: string | number ] | st
     method: 'delete',
 })
 
-const AdminController = { index, approveVerification, rejectVerification, verifyUser, unverifyUser, banUser, unbanUser, deleteUser, bulkAction, posts, deletePost, repos, deleteRepo }
+const AdminController = { index, approveVerification, rejectVerification, verifyUser, unverifyUser, banUser, unbanUser, deleteUser, bulkAction, repos, deleteRepo }
 
 export default AdminController

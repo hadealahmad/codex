@@ -14,15 +14,15 @@ class Post extends Model
         'user_id',
         'slug',
         'title',
-        'content',
-        'thumbnail',
+        'body_markdown',
+        'cover_image_path',
+        'excerpt',
+        'canonical_url',
         'published_at',
-        'og_data',
     ];
 
     protected $casts = [
         'published_at' => 'datetime',
-        'og_data' => 'array',
     ];
 
     protected static function booted()

@@ -38,7 +38,7 @@ export default function Index({ notifications }) {
                                         <div>
                                             <p className="font-medium">{notification.data.message}</p>
                                             <span className="text-xs text-muted-foreground">
-                                                {new Date(notification.created_at).toLocaleDateString('ar-EG')}
+                                                {new Date(notification.created_at).toLocaleDateString('ar-SY')}
                                             </span>
                                         </div>
                                     </div>

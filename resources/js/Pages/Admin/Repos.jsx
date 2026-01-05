@@ -253,7 +253,7 @@ export default function Repos({ repos, stats, filters }) {
                                                 </div>
                                             </TableCell>
                                             <TableCell className="text-xs text-muted-foreground">
-                                                {new Date(repo.created_at).toLocaleDateString('ar-EG')}
+                                                {new Date(repo.created_at).toLocaleDateString('ar-SY')}
                                             </TableCell>
                                             <TableCell>
                                                 <div className="flex items-center gap-1 justify-end">

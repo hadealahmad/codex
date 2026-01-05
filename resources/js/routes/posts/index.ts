@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\PostController::create
-* @see app/Http/Controllers/PostController.php:31
+* @see app/Http/Controllers/PostController.php:33
 * @route '/posts/create'
 */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\PostController::create
-* @see app/Http/Controllers/PostController.php:31
+* @see app/Http/Controllers/PostController.php:33
 * @route '/posts/create'
 */
 create.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ create.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PostController::create
-* @see app/Http/Controllers/PostController.php:31
+* @see app/Http/Controllers/PostController.php:33
 * @route '/posts/create'
 */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\PostController::create
-* @see app/Http/Controllers/PostController.php:31
+* @see app/Http/Controllers/PostController.php:33
 * @route '/posts/create'
 */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\PostController::store
-* @see app/Http/Controllers/PostController.php:36
+* @see app/Http/Controllers/PostController.php:38
 * @route '/posts'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -60,7 +60,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\PostController::store
-* @see app/Http/Controllers/PostController.php:36
+* @see app/Http/Controllers/PostController.php:38
 * @route '/posts'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -69,7 +69,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PostController::store
-* @see app/Http/Controllers/PostController.php:36
+* @see app/Http/Controllers/PostController.php:38
 * @route '/posts'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -79,7 +79,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\PostController::edit
-* @see app/Http/Controllers/PostController.php:103
+* @see app/Http/Controllers/PostController.php:82
 * @route '/posts/{post}/edit'
 */
 export const edit = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -94,7 +94,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\PostController::edit
-* @see app/Http/Controllers/PostController.php:103
+* @see app/Http/Controllers/PostController.php:82
 * @route '/posts/{post}/edit'
 */
 edit.url = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -127,7 +127,7 @@ edit.url = (args: { post: number | { id: number } } | [post: number | { id: numb
 
 /**
 * @see \App\Http\Controllers\PostController::edit
-* @see app/Http/Controllers/PostController.php:103
+* @see app/Http/Controllers/PostController.php:82
 * @route '/posts/{post}/edit'
 */
 edit.get = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -137,7 +137,7 @@ edit.get = (args: { post: number | { id: number } } | [post: number | { id: numb
 
 /**
 * @see \App\Http\Controllers\PostController::edit
-* @see app/Http/Controllers/PostController.php:103
+* @see app/Http/Controllers/PostController.php:82
 * @route '/posts/{post}/edit'
 */
 edit.head = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -147,7 +147,7 @@ edit.head = (args: { post: number | { id: number } } | [post: number | { id: num
 
 /**
 * @see \App\Http\Controllers\PostController::update
-* @see app/Http/Controllers/PostController.php:114
+* @see app/Http/Controllers/PostController.php:93
 * @route '/posts/{post}'
 */
 export const update = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -162,7 +162,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\PostController::update
-* @see app/Http/Controllers/PostController.php:114
+* @see app/Http/Controllers/PostController.php:93
 * @route '/posts/{post}'
 */
 update.url = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -195,7 +195,7 @@ update.url = (args: { post: number | { id: number } } | [post: number | { id: nu
 
 /**
 * @see \App\Http\Controllers\PostController::update
-* @see app/Http/Controllers/PostController.php:114
+* @see app/Http/Controllers/PostController.php:93
 * @route '/posts/{post}'
 */
 update.put = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -205,7 +205,7 @@ update.put = (args: { post: number | { id: number } } | [post: number | { id: nu
 
 /**
 * @see \App\Http\Controllers\PostController::destroy
-* @see app/Http/Controllers/PostController.php:144
+* @see app/Http/Controllers/PostController.php:123
 * @route '/posts/{post}'
 */
 export const destroy = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -220,7 +220,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\PostController::destroy
-* @see app/Http/Controllers/PostController.php:144
+* @see app/Http/Controllers/PostController.php:123
 * @route '/posts/{post}'
 */
 destroy.url = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -253,7 +253,7 @@ destroy.url = (args: { post: number | { id: number } } | [post: number | { id: n
 
 /**
 * @see \App\Http\Controllers\PostController::destroy
-* @see app/Http/Controllers/PostController.php:144
+* @see app/Http/Controllers/PostController.php:123
 * @route '/posts/{post}'
 */
 destroy.delete = (args: { post: number | { id: number } } | [post: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -321,7 +321,7 @@ like.post = (args: { post: number | { id: number } } | [post: number | { id: num
 
 /**
 * @see \App\Http\Controllers\PostController::user_blog
-* @see app/Http/Controllers/PostController.php:88
+* @see app/Http/Controllers/PostController.php:67
 * @route '/@{username}/blog'
 */
 export const user_blog = (args: { username: string | number } | [username: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -336,7 +336,7 @@ user_blog.definition = {
 
 /**
 * @see \App\Http\Controllers\PostController::user_blog
-* @see app/Http/Controllers/PostController.php:88
+* @see app/Http/Controllers/PostController.php:67
 * @route '/@{username}/blog'
 */
 user_blog.url = (args: { username: string | number } | [username: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -363,7 +363,7 @@ user_blog.url = (args: { username: string | number } | [username: string | numbe
 
 /**
 * @see \App\Http\Controllers\PostController::user_blog
-* @see app/Http/Controllers/PostController.php:88
+* @see app/Http/Controllers/PostController.php:67
 * @route '/@{username}/blog'
 */
 user_blog.get = (args: { username: string | number } | [username: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -373,7 +373,7 @@ user_blog.get = (args: { username: string | number } | [username: string | numbe
 
 /**
 * @see \App\Http\Controllers\PostController::user_blog
-* @see app/Http/Controllers/PostController.php:88
+* @see app/Http/Controllers/PostController.php:67
 * @route '/@{username}/blog'
 */
 user_blog.head = (args: { username: string | number } | [username: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -383,7 +383,7 @@ user_blog.head = (args: { username: string | number } | [username: string | numb
 
 /**
 * @see \App\Http\Controllers\PostController::show
-* @see app/Http/Controllers/PostController.php:70
+* @see app/Http/Controllers/PostController.php:49
 * @route '/u/{username}/{slug}'
 */
 export const show = (args: { username: string | number, slug: string | number } | [username: string | number, slug: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -398,7 +398,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\PostController::show
-* @see app/Http/Controllers/PostController.php:70
+* @see app/Http/Controllers/PostController.php:49
 * @route '/u/{username}/{slug}'
 */
 show.url = (args: { username: string | number, slug: string | number } | [username: string | number, slug: string | number ], options?: RouteQueryOptions) => {
@@ -424,7 +424,7 @@ show.url = (args: { username: string | number, slug: string | number } | [userna
 
 /**
 * @see \App\Http\Controllers\PostController::show
-* @see app/Http/Controllers/PostController.php:70
+* @see app/Http/Controllers/PostController.php:49
 * @route '/u/{username}/{slug}'
 */
 show.get = (args: { username: string | number, slug: string | number } | [username: string | number, slug: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -434,7 +434,7 @@ show.get = (args: { username: string | number, slug: string | number } | [userna
 
 /**
 * @see \App\Http\Controllers\PostController::show
-* @see app/Http/Controllers/PostController.php:70
+* @see app/Http/Controllers/PostController.php:49
 * @route '/u/{username}/{slug}'
 */
 show.head = (args: { username: string | number, slug: string | number } | [username: string | number, slug: string | number ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({

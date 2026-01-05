@@ -31,8 +31,8 @@ const MarkdownTip = ({ icon: Icon, label, example }) => (
 export default function Create() {
     const { data, setData, post, processing, errors } = useForm({
         title: '',
-        content: '',
-        thumbnail: null,
+        body_markdown: '',
+        cover_image: null,
     });
 
     const submit = (e) => {
@@ -77,7 +77,7 @@ export default function Create() {
                         </Button>
                         <Button
                             onClick={submit}
-                            disabled={processing || data.content.length < 10 || !data.title}
+                            disabled={processing || data.body_markdown.length < 10 || !data.title}
                             className="cursor-pointer px-8 font-bold shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all"
                         >
                             {processing ? 'جاري النشر...' : 'نشر التدوينة'}
@@ -117,14 +117,14 @@ export default function Create() {
                                         <Textarea
                                             placeholder="اكتب المحتوى هنا... يمكنك استخدام Markdown للتنسيق.\n\nمثال:\n## عنوان فرعي\nابدأ بالكتابة..."
                                             className="min-h-[600px] border-0 focus-visible:ring-0 resize-none text-lg p-8 leading-relaxed font-arabic bg-transparent"
-                                            value={data.content}
-                                            onChange={e => setData('content', e.target.value)}
+                                            value={data.body_markdown}
+                                            onChange={e => setData('body_markdown', e.target.value)}
                                             dir="auto"
                                         />
                                     </CardContent>
                                     <div className="border-t p-3 bg-muted/5 flex items-center justify-between text-[11px] text-muted-foreground font-mono">
                                         <span>يدعم تنسيق Markdown بشكل كامل</span>
-                                        <span>{data.content.length} حرف</span>
+                                        <span>{data.body_markdown.length} حرف</span>
                                     </div>
                                 </Card>
                             </TabsContent>
@@ -132,8 +132,8 @@ export default function Create() {
                             <TabsContent value="preview" className="mt-0">
                                 <Card className="border-2 min-h-[600px] bg-card/50 backdrop-blur-sm">
                                     <CardContent className="p-8 md:p-12 prose dark:prose-invert max-w-none break-words" dir="auto">
-                                        {data.content ? (
-                                            <Markdown>{data.content}</Markdown>
+                                        {data.body_markdown ? (
+                                            <Markdown>{data.body_markdown}</Markdown>
                                         ) : (
                                             <div className="flex flex-col items-center justify-center py-24 text-muted-foreground opacity-50">
                                                 <Eye className="w-12 h-12 mb-4" />
@@ -145,10 +145,10 @@ export default function Create() {
                             </TabsContent>
                         </Tabs>
 
-                        {errors.content && (
+                        {errors.body_markdown && (
                             <div className="p-3 rounded bg-destructive/10 border border-destructive/20 text-destructive text-sm font-medium flex items-center gap-2">
                                 <HelpCircle className="w-4 h-4" />
-                                {errors.content}
+                                {errors.body_markdown}
                             </div>
                         )}
                     </div>
@@ -168,13 +168,13 @@ export default function Create() {
                                         type="file"
                                         accept="image/*"
                                         className="flex w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                        onChange={e => setData('thumbnail', e.target.files[0])}
+                                        onChange={e => setData('cover_image', e.target.files[0])}
                                     />
                                     <p className="text-[10px] text-muted-foreground">
                                         الحد الأقصى: 512KB. سيتم تحويلها إلى WebP تلقائياً.
                                     </p>
                                 </div>
-                                {errors.thumbnail && <p className="text-destructive text-xs">{errors.thumbnail}</p>}
+                                {errors.cover_image && <p className="text-destructive text-xs">{errors.cover_image}</p>}
                             </CardContent>
                         </Card>
 

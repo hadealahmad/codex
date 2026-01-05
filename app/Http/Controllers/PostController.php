@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Post\CreatePostAction;
+use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -33,36 +35,13 @@ class PostController extends Controller
         return Inertia::render('Posts/Create');
     }
 
-    public function store(Request $request)
+    public function store(StorePostRequest $request, CreatePostAction $createPostAction)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string|min:10',
-            'thumbnail' => 'nullable|image|max:512', // 512KB max
-        ]);
-
-        $slug = Str::slug($request->title) . '-' . Str::random(6);
-
-
-
-        $thumbnailPath = null;
-        if ($request->hasFile('thumbnail')) {
-            $thumbnailPath = $this->imageService->store(
-                $request->file('thumbnail'),
-                'thumbnails',
-                80
-            );
-            $thumbnailPath = asset('storage/' . $thumbnailPath);
-        }
-
-        $post = Post::create([
-            'user_id' => Auth::id(),
-            'slug' => $slug,
-            'title' => $request->title,
-            'content' => $request->content,
-            'thumbnail' => $thumbnailPath,
-            'published_at' => now(),
-        ]);
+        $post = $createPostAction->execute(
+            Auth::user(),
+            $request->validated(),
+            $request->file('cover_image')
+        );
 
         return redirect()->route('posts.show', ['username' => Auth::user()->username, 'slug' => $post->slug]);
     }

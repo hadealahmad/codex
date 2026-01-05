@@ -418,7 +418,7 @@ export default function Dashboard({ stats, users, filters }) {
                                                     )}
                                                 </TableCell>
                                                 <TableCell className="text-xs text-muted-foreground">
-                                                    {new Date(user.created_at).toLocaleDateString('ar-EG')}
+                                                    {new Date(user.created_at).toLocaleDateString('ar-SY')}
                                                 </TableCell>
                                                 <TableCell>
                                                     <div className="flex justify-end">

@@ -45,7 +45,7 @@ show.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\VerificationController::store
-* @see app/Http/Controllers/VerificationController.php:30
+* @see app/Http/Controllers/VerificationController.php:37
 * @route '/verification'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -60,7 +60,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\VerificationController::store
-* @see app/Http/Controllers/VerificationController.php:30
+* @see app/Http/Controllers/VerificationController.php:37
 * @route '/verification'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -69,7 +69,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\VerificationController::store
-* @see app/Http/Controllers/VerificationController.php:30
+* @see app/Http/Controllers/VerificationController.php:37
 * @route '/verification'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -77,9 +77,44 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     method: 'post',
 })
 
+/**
+* @see \App\Http\Controllers\VerificationController::scan
+* @see app/Http/Controllers/VerificationController.php:55
+* @route '/verification/scan'
+*/
+export const scan = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: scan.url(options),
+    method: 'post',
+})
+
+scan.definition = {
+    methods: ["post"],
+    url: '/verification/scan',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\VerificationController::scan
+* @see app/Http/Controllers/VerificationController.php:55
+* @route '/verification/scan'
+*/
+scan.url = (options?: RouteQueryOptions) => {
+    return scan.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\VerificationController::scan
+* @see app/Http/Controllers/VerificationController.php:55
+* @route '/verification/scan'
+*/
+scan.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: scan.url(options),
+    method: 'post',
+})
+
 const verification = {
     show: Object.assign(show, show),
     store: Object.assign(store, store),
+    scan: Object.assign(scan, scan),
 }
 
 export default verification

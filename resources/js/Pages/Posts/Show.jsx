@@ -3,20 +3,17 @@ import Layout from '@/Layouts/Layout';
 import { Head, Link, usePage, useForm, router } from '@inertiajs/react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
-import Markdown from 'react-markdown';
 import {
     ArrowRight,
     Share2,
-    ExternalLink,
     Edit2,
     Trash2,
     Heart,
     MessageSquare,
     Calendar,
-    User,
     Clock,
     Send,
     MoreHorizontal
@@ -30,7 +27,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export default function Show({ post }) {
-    const { user, og_data, comments = [] } = post;
+    const { user, comments = [] } = post;
     const { auth } = usePage().props;
     const isOwner = auth.user && auth.user.id === post.user_id;
     const [isDeleting, setIsDeleting] = useState(false);
@@ -86,7 +83,7 @@ export default function Show({ post }) {
         }
     };
 
-    const formattedDate = new Date(post.published_at).toLocaleDateString('ar-EG', {
+    const formattedDate = new Date(post.published_at).toLocaleDateString('ar-SY', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
@@ -94,7 +91,7 @@ export default function Show({ post }) {
 
     return (
         <Layout>
-            <Head title={post.slug} />
+            <Head title={post.title} />
 
             <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                 {/* Top Navigation */}
@@ -152,7 +149,7 @@ export default function Show({ post }) {
                                 <Separator orientation="vertical" className="h-4" />
                                 <span className="flex items-center gap-1.5">
                                     <Clock className="w-4 h-4" />
-                                    {Math.ceil(post.content.split(' ').length / 200)} دقيقة للقراءة
+                                    {post.reading_time} دقيقة للقراءة
                                 </span>
                             </div>
                         </div>
@@ -162,10 +159,10 @@ export default function Show({ post }) {
                         </h1>
 
                         {/* Thumbnail */}
-                        {post.thumbnail && (
+                        {post.cover_image_path && (
                             <div className="mb-8 rounded-lg overflow-hidden border-2">
                                 <img
-                                    src={post.thumbnail}
+                                    src={post.cover_image_path}
                                     alt={post.slug}
                                     className="w-full h-auto max-h-[500px] object-cover"
                                 />
@@ -173,36 +170,10 @@ export default function Show({ post }) {
                         )}
 
                         {/* Article Content */}
-                        <article className="prose dark:prose-invert prose-lg max-w-none break-words overflow-hidden prose-headings:mb-6 prose-headings:mt-8 prose-p:my-4 prose-li:my-2 prose-img:rounded-xl prose-img:my-4 prose-ul:my-4 prose-ol:my-4 leading-normal" dir="auto">
-                            <Markdown components={{
-                                a: ({ node, ...props }) => <a target="_blank" rel="noopener noreferrer" {...props} />
-                            }}>{post.content}</Markdown>
+                        <article className="prose dark:prose-invert prose-lg max-w-none overflow-hidden prose-headings:mb-6 prose-headings:mt-8 prose-p:my-4 prose-li:my-2 prose-img:rounded-xl prose-img:my-4 prose-ul:my-4 prose-ol:my-4 leading-normal" dir="auto"
+                            dangerouslySetInnerHTML={{ __html: post.body_html }}
+                        >
                         </article>
-
-                        {/* OG Card (Link Preview) */}
-                        {og_data && og_data.url && (
-                            <div className="mt-12 group">
-                                <a href={og_data.url} target="_blank" rel="noopener noreferrer" className="block no-underline">
-                                    <Card className="hover:bg-muted/50 transition-all border-2 group-hover:border-primary/20 bg-muted/20 overflow-hidden flex flex-col md:flex-row">
-                                        <div className="flex flex-col md:flex-row w-full">
-                                            {og_data.image && (
-                                                <div className="md:w-1/3 aspect-video md:aspect-auto overflow-hidden">
-                                                    <img src={og_data.image} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                                                </div>
-                                            )}
-                                            <div className="p-6 flex-1 flex flex-col justify-center gap-2">
-                                                <h3 className="font-bold text-lg line-clamp-1 text-foreground" dir="auto">{og_data.title}</h3>
-                                                <p className="text-muted-foreground text-sm line-clamp-2" dir="auto">{og_data.description}</p>
-                                                <div className="flex items-center gap-1.5 text-xs text-primary font-medium mt-2">
-                                                    <ExternalLink className="w-3 h-3" />
-                                                    <span>{new URL(og_data.url).hostname}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Card>
-                                </a>
-                            </div>
-                        )}
 
                         <div className="flex items-center justify-between mt-12 py-6 border-y border-dashed">
                             <Button
@@ -312,7 +283,7 @@ export default function Show({ post }) {
                                                 </Avatar>
                                                 <div className="text-right">
                                                     <p className="text-sm font-bold group-hover:text-primary transition-colors">{comment.user.name}</p>
-                                                    <p className="text-[10px] text-muted-foreground">{new Date(comment.created_at).toLocaleDateString('ar-EG', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+                                                    <p className="text-[10px] text-muted-foreground">{new Date(comment.created_at).toLocaleDateString('ar-SY', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
                                                 </div>
                                             </Link>
 
@@ -327,7 +298,7 @@ export default function Show({ post }) {
                                                 </Button>
                                             )}
                                         </div>
-                                        <div className="text-sm text-foreground/90 leading-relaxed pr-12 break-words" dir="auto">
+                                        <div className="text-sm text-foreground/90 leading-relaxed pr-12" dir="auto">
                                             {comment.content}
                                         </div>
                                     </CardContent>

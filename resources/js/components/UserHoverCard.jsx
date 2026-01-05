@@ -71,7 +71,7 @@ export default function UserHoverCard({ user, children }) {
                 {user.created_at && (
                     <div className="flex items-center gap-1 text-xs text-muted-foreground mt-4">
                         <CalendarDays className="mr-1 h-3 w-3 opacity-70" />
-                        <span>انضم في {new Date(user.created_at).toLocaleDateString('ar-EG', { month: 'long', year: 'numeric' })}</span>
+                        <span>انضم في {new Date(user.created_at).toLocaleDateString('ar-SY', { month: 'long', year: 'numeric' })}</span>
                     </div>
                 )}
 

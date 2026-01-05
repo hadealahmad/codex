@@ -127,7 +127,7 @@ export default function Feed({ posts, tab, recommendedUsers, topRepos }) {
                                                     <span className="truncate" dir="ltr">@{post.user.username}</span>
                                                     <span>•</span>
                                                     <span className="whitespace-nowrap">
-                                                        {new Date(post.published_at).toLocaleDateString('ar-EG')}
+                                                        {new Date(post.published_at).toLocaleDateString('ar-SY')}
                                                     </span>
                                                 </div>
                                             </div>

@@ -225,7 +225,7 @@ export default function Posts({ posts, stats, filters }) {
                                                 </Link>
                                             </TableCell>
                                             <TableCell className="text-xs text-muted-foreground whitespace-nowrap">
-                                                {new Date(post.created_at).toLocaleDateString('ar-EG')}
+                                                {new Date(post.created_at).toLocaleDateString('ar-SY')}
                                             </TableCell>
                                             <TableCell>
                                                 <div className="flex items-center gap-1 justify-end">

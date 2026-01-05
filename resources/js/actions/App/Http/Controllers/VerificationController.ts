@@ -45,7 +45,7 @@ show.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\VerificationController::store
-* @see app/Http/Controllers/VerificationController.php:30
+* @see app/Http/Controllers/VerificationController.php:37
 * @route '/verification'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -60,7 +60,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\VerificationController::store
-* @see app/Http/Controllers/VerificationController.php:30
+* @see app/Http/Controllers/VerificationController.php:37
 * @route '/verification'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -69,7 +69,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\VerificationController::store
-* @see app/Http/Controllers/VerificationController.php:30
+* @see app/Http/Controllers/VerificationController.php:37
 * @route '/verification'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -77,6 +77,40 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     method: 'post',
 })
 
-const VerificationController = { show, store }
+/**
+* @see \App\Http\Controllers\VerificationController::checkGists
+* @see app/Http/Controllers/VerificationController.php:55
+* @route '/verification/scan'
+*/
+export const checkGists = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: checkGists.url(options),
+    method: 'post',
+})
+
+checkGists.definition = {
+    methods: ["post"],
+    url: '/verification/scan',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\VerificationController::checkGists
+* @see app/Http/Controllers/VerificationController.php:55
+* @route '/verification/scan'
+*/
+checkGists.url = (options?: RouteQueryOptions) => {
+    return checkGists.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\VerificationController::checkGists
+* @see app/Http/Controllers/VerificationController.php:55
+* @route '/verification/scan'
+*/
+checkGists.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: checkGists.url(options),
+    method: 'post',
+})
+
+const VerificationController = { show, store, checkGists }
 
 export default VerificationController
