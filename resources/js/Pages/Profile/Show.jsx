@@ -1,9 +1,8 @@
 import React from 'react';
 import Layout from '@/Layouts/Layout';
 import { Head, usePage, useForm, Link, router } from '@inertiajs/react';
-import Markdown from 'react-markdown';
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { Input } from "@/components/ui/input";
@@ -11,23 +10,16 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import {
-    Github, Star, Trash2, ExternalLink, Heart, Edit2, DownloadCloud,
-    Filter, FolderPlus, Folder, LayoutGrid, List, AlertTriangle,
-    ArrowUpDown, ChevronUp, ChevronDown, RefreshCw, Camera,
-    MoreVertical, Settings, LogOut, Share2, Globe,
-    Twitter, Linkedin, Youtube, Instagram, MessageCircle, Phone, Smartphone, Check,
-    Facebook, Palette, RotateCcw, FileText
+    Github, Star, Trash2, ExternalLink, Edit2, DownloadCloud,
+    Folder, AlertTriangle,
+    Camera, Settings, Share2, Globe,
+    Twitter, Linkedin, Youtube, Instagram, MessageCircle, Phone, Check,
+    Facebook, Palette, RotateCcw
 } from 'lucide-react';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import {
-    DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
-    DropdownMenuSeparator, DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import {
     Select, SelectContent, SelectItem, SelectTrigger, SelectValue
 } from "@/components/ui/select";
-import { useState } from 'react';
 import {
     Dialog,
     DialogContent,
@@ -462,9 +454,9 @@ export default function Show({ profile, activeTab }) {
                                 <Link href={`/u/${profile.username}/${profile.latest_post.slug}`} className="flex flex-col md:flex-row h-full">
                                     {/* Image (33%) - Moved to Start for RTL Right Side */}
                                     <div className="w-full md:w-1/3 h-56 md:h-auto relative bg-muted shrink-0 order-last md:order-first">
-                                        {(profile.latest_post.thumbnail || (profile.latest_post.og_data && profile.latest_post.og_data.image)) ? (
+                                        {(profile.latest_post.cover_image_path) ? (
                                             <img
-                                                src={profile.latest_post.thumbnail || profile.latest_post.og_data.image}
+                                                src={profile.latest_post.cover_image_path}
                                                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 absolute inset-0"
                                                 alt=""
                                             />

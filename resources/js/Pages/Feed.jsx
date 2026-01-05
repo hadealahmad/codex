@@ -170,19 +170,14 @@ export default function Feed({ posts, tab, recommendedUsers, topRepos }) {
                                             </p>
                                         </Link>
 
-                                        {(post.thumbnail || (post.og_data && post.og_data.image)) && (
+                                        {(post.cover_image_path) && (
                                             <Link href={`/u/${post.user.username}/${post.slug}`} className="block mt-4 overflow-hidden rounded-xl border group-hover:border-primary/20 transition-colors">
                                                 <div className="relative aspect-video">
                                                     <img
-                                                        src={post.thumbnail || post.og_data.image}
+                                                        src={post.cover_image_path}
                                                         alt={post.slug}
                                                         className="w-full h-full object-cover"
                                                     />
-                                                    {post.og_data && post.og_data.title && !post.thumbnail && (
-                                                        <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/60 to-transparent">
-                                                            <p className="font-semibold text-white text-sm line-clamp-1" dir="auto">{post.og_data.title}</p>
-                                                        </div>
-                                                    )}
                                                 </div>
                                             </Link>
                                         )}
