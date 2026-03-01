@@ -110,11 +110,11 @@ class PostController extends Controller
                 'thumbnails',
                 80
             );
-            $post->thumbnail = asset('storage/' . $thumbnailPath);
+            $post->cover_image_path = $thumbnailPath;
         }
 
         $post->title = $request->title;
-        $post->content = $request->content;
+        $post->body_markdown = $request->content;
         $post->save();
 
         return redirect()->route('posts.show', ['username' => Auth::user()->username, 'slug' => $post->slug]);

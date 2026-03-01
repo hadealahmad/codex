@@ -32,10 +32,34 @@ class Post extends Model
         });
 
         static::updated(function ($post) {
-            if ($post->isDirty('content')) {
+            if ($post->isDirty('body_markdown')) {
                 FetchOpenGraphData::dispatch($post);
             }
         });
+    }
+
+    public function getCoverImagePathAttribute($value)
+    {
+        if (!$value) {
+            return null;
+        }
+
+        if (str_starts_with($value, 'http')) {
+            return $value;
+        }
+
+        return asset('storage/' . $value);
+    }
+
+    // Compatibility accessors for old frontend field names
+    public function getContentAttribute()
+    {
+        return $this->body_markdown;
+    }
+
+    public function getThumbnailAttribute()
+    {
+        return $this->cover_image_path;
     }
 
     public function user()
