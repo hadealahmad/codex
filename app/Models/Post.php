@@ -25,6 +25,11 @@ class Post extends Model
         'published_at' => 'datetime',
     ];
 
+    protected $appends = [
+        'content',
+        'thumbnail',
+    ];
+
     protected static function booted()
     {
         static::created(function ($post) {

@@ -11,7 +11,7 @@ import { toast } from "sonner";
 export default function Edit({ post }) {
     const { data, setData, post: submitPost, processing, errors } = useForm({
         title: post.title || '',
-        content: post.content,
+        content: post.content || '',
         thumbnail: null,
         _method: 'PUT',
     });
