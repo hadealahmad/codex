@@ -1,115 +1,93 @@
 # Codex
 
-Codex is a social platform built for developers to share projects, discuss ideas, and connect with peers. We've built this functionality using Laravel and React, aiming to provide a smooth and engaging experience.
+Codex is a social platform built for developers to share projects, publish blog posts, discuss ideas, and connect with peers. Built with Laravel 12 and React 19 via Inertia.js.
+
+> 📚 **Full documentation lives in [`docs/`](docs/README.md)** — architecture, features, database schema, admin panel, styling guidelines, and operations.
 
 ## Tech Stack
 
-We utilize a modern stack to ensure performance and developer experience:
+- **Backend:** [Laravel](https://laravel.com) 12 (PHP 8.2+)
+- **Frontend:** [React](https://react.dev) 19 + [Inertia.js](https://inertiajs.com) 2, built with [Vite](https://vite.dev) 7
+- **UI Components:** [shadcn/ui](https://ui.shadcn.com) on Radix primitives, Tailwind CSS 4, lucide-react icons, sonner toasts
+- **Admin Panel:** [Filament](https://filamentphp.com) v4 at `/admin`
+- **Routing (FE↔BE):** [Wayfinder](https://github.com/laravel/wayfinder) typed route/action bindings
+- **Runtime:** [Bun](https://bun.sh) (or Node.js)
+- **Database:** SQLite (local default), MySQL/MariaDB (production)
+- **Images:** Intervention Image 3 (WebP conversion)
+- **Authentication:** GitHub OAuth only ([Laravel Socialite](https://github.com/laravel/socialite))
+- **Queue / Cache / Sessions:** database driver
 
-- **Backend:** [Laravel](https://laravel.com)
-- **Frontend:** [React](https://react.dev) with [Inertia.js](https://inertiajs.com)
-- **UI Components:** [shadcn/ui](https://ui.shadcn.com)
-- **Runtime:** [Bun](https://bun.sh) (for JavaScript environment)
-- **Database:** Compatible with MySQL, MariaDB, or SQLite
-- **Authentication:** Integrated GitHub OAuth
+## Key Features
+
+- Global & following feeds with likes, comments, and follow recommendations
+- Developer blogging: markdown posts with cover images, auto-generated excerpts, reading time, slugs (`/u/{username}/{slug}`), and Open Graph link previews
+- GitHub repo import & showcase with folders, featured repos, and language filters
+- Gist-based account verification
+- Public profiles at `/@{username}`, user explore page, notifications
+- Admin: custom dashboard (user/verification/repo moderation) + Filament CRUD panel
+
+See [docs/features.md](docs/features.md) for the full list.
 
 ## Project Structure
 
-To help you navigate the codebase, here is a brief overview of the key directories:
+- **`app/Http/Controllers`** — backend logic (e.g., `FeedController`, `PostController`, `RepoController`)
+- **`app/Filament/Resources`** — Filament v4 admin CRUD (Users, Posts, Comments)
+- **`app/Models`** — Eloquent models (`User`, `Post`, `Repo`, `Comment`, `Verification`)
+- **`app/Jobs`** — queued work (Open Graph scraping, gist verification)
+- **`resources/js/Pages`** — Inertia pages rendered by React
+- **`resources/js/components`** — reusable UI components (shadcn/ui based)
+- **`resources/js/routes` & `resources/js/actions`** — Wayfinder-generated route bindings (regenerate with `php artisan wayfinder:generate`)
+- **`routes/web.php`** — all web routes
 
-- **`app/Http/Controllers`**: This directory contains the backend logic and API endpoints (e.g., `RepoController`, `PostController`).
-- **`app/Models`**: Here you will find the Eloquent models representing our database tables (e.g., `User`, `Repo`, `Post`).
-- **`resources/js/Pages`**: This directory houses the frontend views which are rendered by Inertia.js.
-- **`resources/js/components`**: Our reusable UI components, primarily built using shadcn/ui, are located here.
-- **`routes/web.php`**: This file defines all the web routes for the application.
-
-## Deployment & Setup (Local Development)
-
-If you'd like to run Codex locally for testing or development, please follow these steps. We hope this guide makes the process straightforward.
+## Local Development
 
 ### Prerequisites
 
-Before starting, please ensure you have the following installed on your machine:
-- [PHP](https://www.php.net/) (8.2 or higher)
-- [Composer](https://getcomposer.org/)
-- [Bun](https://bun.sh/) (or Node.js)
-- A running database server we use MySQL for production
+- PHP 8.2+, Composer, Bun (or Node.js), a database (SQLite works out of the box)
 
-### Installation Steps
+### Installation
 
-1. **Clone the repository**
-   Start by cloning the codebase to your local machine:
-   ```bash
-   git clone <repository-url>
-   cd codex
-   ```
+```bash
+git clone <repository-url> && cd codex
+composer install
+bun install
+cp .env.example .env
+```
 
-2. **Install Backend Dependencies**
-   Use Composer to install the PHP dependencies:
-   ```bash
-   composer install
-   ```
+Set your GitHub OAuth credentials in `.env`:
 
-3. **Install Frontend Dependencies**
-   We use Bun for managing frontend packages (you can also use npm/yarn if you prefer):
-   ```bash
-   bun install
-   ```
+```ini
+APP_NAME=Codex
+APP_URL=http://localhost:8000
 
-4. **Environment Configuration**
-   Create your environment configuration file by copying the example:
-   ```bash
-   cp .env.example .env
-   ```
-   Open the `.env` file in your text editor and update the database credentials and GitHub OAuth settings:
-   ```ini
-   APP_NAME=Codex
-   APP_URL=http://localhost:8000
+GITHUB_CLIENT_ID=your_github_client_id
+GITHUB_CLIENT_SECRET=your_github_client_secret
+GITHUB_REDIRECT_URI="${APP_URL}/auth/github/callback"
+```
 
-   DB_CONNECTION=mysql
-   DB_HOST=127.0.0.1
-   DB_PORT=3306
-   DB_DATABASE=codex
-   DB_USERNAME=root
-   DB_PASSWORD=your_password
+Then:
 
-   # GitHub OAuth credentials (required for login)
-   GITHUB_CLIENT_ID=your_github_client_id
-   GITHUB_CLIENT_SECRET=your_github_client_secret
-   GITHUB_REDIRECT_URI="${APP_URL}/auth/github/callback"
-   ```
+```bash
+php artisan key:generate
+php artisan migrate
+php artisan storage:link
+composer dev
+```
 
-5. **Generate Application Key**
-   Generate a unique application key for your instance:
-   ```bash
-   php artisan key:generate
-   ```
+`composer dev` runs everything concurrently: `php artisan serve`, queue worker, Pail (log tail), and Vite. The app is available at `http://localhost:8000`.
 
-6. **Run Migrations**
-   Set up the database tables by running the migrations:
-   ```bash
-   php artisan migrate
-   ```
+> The queue worker is required for Open Graph link previews and gist verification.
 
-7. **Run the Application**
-   To start the development environment, you will need to run the backend and frontend servers simultaneously in separate terminal windows.
+More details: [docs/operations/development.md](docs/operations/development.md).
 
-   **Terminal 1 (Backend):**
-   ```bash
-   php artisan serve
-   ```
+## Deployment
 
-   **Terminal 2 (Frontend):**
-   ```bash
-   bun run dev
-   ```
-
-   Once both are running, open your browser and visit `http://localhost:8000` to see the application in action.
+See [docs/operations/deployment.md](docs/operations/deployment.md) for the Virtualmin/Apache production guide, Supervisor setup, and the self-hosted GitHub Actions runner workflow.
 
 ## Contributing
 
-We are grateful for any contributions! If you encounter issues or have suggestions, please feel free to open an issue or submit a pull request. We appreciate your specific feedback.
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Open-sourced under the [MIT license](LICENSE).

@@ -19,10 +19,12 @@ class Post extends Model
         'excerpt',
         'canonical_url',
         'published_at',
+        'og_data',
     ];
 
     protected $casts = [
         'published_at' => 'datetime',
+        'og_data' => 'array',
     ];
 
     protected $appends = [
