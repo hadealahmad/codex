@@ -19,7 +19,7 @@ resources/js/
 │   ├── Users/List.jsx       # explore users
 │   ├── Notifications/Index.jsx
 │   ├── Verification/Show.jsx
-│   └── Admin/{Dashboard,Posts,Repos}.jsx
+│   └── Admin/{Dashboard,Repos}.jsx
 ├── components/
 │   ├── AddRepoDialog.jsx    # GitHub repo import dialog
 │   ├── NotificationBox.jsx  # recent-notifications dropdown

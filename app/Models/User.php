@@ -3,14 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Filament\Models\Contracts\FilamentUser;
-use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Post;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -46,6 +44,7 @@ class User extends Authenticatable implements FilamentUser
     protected $hidden = [
         'password',
         'remember_token',
+        'github_token',
     ];
 
     /**
@@ -66,7 +65,7 @@ class User extends Authenticatable implements FilamentUser
 
     public function getIsAdminAttribute($value)
     {
-        return $value || $this->username === 'hadealahmad';
+        return (bool) $value;
     }
     public function repos()
     {
@@ -108,10 +107,5 @@ class User extends Authenticatable implements FilamentUser
     public function comments()
     {
         return $this->hasMany(Comment::class);
-    }
-
-    public function canAccessPanel(Panel $panel): bool
-    {
-        return $this->is_admin;
     }
 }

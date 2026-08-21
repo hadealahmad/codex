@@ -52,10 +52,10 @@ export default function UserBlog({ user, posts }) {
                         posts.data.map((post) => (
                             <Card key={post.id} className="flex flex-col h-full overflow-hidden hover:shadow-xl transition-all duration-300 group border-muted/60 bg-card/50 backdrop-blur-sm">
                                 <Link href={`/u/${user.username}/${post.slug}`} className="block h-52 overflow-hidden bg-muted relative">
-                                    {(post.thumbnail || (post.og_data && post.og_data.image)) ? (
+                                    {(post.cover_image_path || (post.og_data && post.og_data.image)) ? (
                                         <>
                                             <img
-                                                src={post.thumbnail || post.og_data.image}
+                                                src={post.cover_image_path || post.og_data.image}
                                                 alt={post.slug}
                                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                             />
@@ -80,7 +80,7 @@ export default function UserBlog({ user, posts }) {
                                             {post.title}
                                         </h3>
                                         <p className="text-muted-foreground line-clamp-3 text-sm leading-relaxed" dir="auto">
-                                            {stripMarkdown(post.content)}
+                                            {stripMarkdown(post.body_markdown)}
                                         </p>
                                     </Link>
                                 </CardContent>

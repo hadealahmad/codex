@@ -28,9 +28,7 @@ Codex is a monolithic Laravel application using **Inertia.js** as the glue betwe
 
 1. `routes/web.php` maps all URLs. Public routes: feed, profiles (`/@{username}`), blog posts (`/u/{username}/{slug}`), explore.
 2. Auth is exclusively **GitHub OAuth** via Socialite (`AuthController`). Scopes: `read:user`, `user:email`, `public_repo`.
-3. Admin area has two layers:
-   - Custom `/admin/*` routes guarded by `auth` + `admin` middleware (`CheckAdmin`) → custom Inertia admin pages (`Pages/Admin/*`).
-   - Filament v4 panel at `/admin` (Filament's own login) → CRUD resources for Users, Posts, Comments. Panel access requires `is_admin`.
+3. Admin area: custom `/admin/*` routes guarded by `auth` + `admin` middleware (`CheckAdmin`) → custom Inertia admin pages (`Pages/Admin/*`). Access requires `is_admin`. Authorization for user-owned resources is handled by Policies (`app/Policies`).
 4. Heavy work is queued on the `database` connection: `FetchOpenGraphData`, `VerifyGistJob`.
 
 ## Key Patterns
@@ -47,9 +45,8 @@ Codex is a monolithic Laravel application using **Inertia.js** as the glue betwe
 app/
 ├── Actions/Post/CreatePostAction.php     # transactional post creation
 ├── Console/Commands/MigratePosts.php     # one-off backfill: app:migrate-posts
-├── Filament/Resources/{Users,Posts,Comments}/   # Filament v4 CRUD (schema + table split)
 ├── Http/
-│   ├── Controllers/                      # 11 controllers (see backend/controllers.md)
+│   ├── Controllers/                      # controllers (see backend/controllers.md)
 │   ├── Middleware/CheckAdmin.php         # blocks non-admins from /admin
 │   ├── Middleware/HandleInertiaRequests.php
 │   ├── Requests/StorePostRequest.php
@@ -58,8 +55,8 @@ app/
 ├── Models/{User,Post,Repo,Comment,Verification}.php
 ├── Notifications/NewFollower.php
 ├── Observers/PostObserver.php
+├── Policies/{PostPolicy,CommentPolicy,RepoPolicy}.php  # authorization
 ├── Providers/AppServiceProvider.php      # registers PostObserver
-├── Providers/Filament/AdminPanelProvider.php
 ├── Repositories/UserRepository.php
 └── Services/{GistVerificationService,ImageService}.php
 ```

@@ -25,12 +25,13 @@ class ProfileController extends Controller
     {
         $user = User::where('username', $username)
             ->with([
-                'repos' => fn ($q) => $q->latest(),
+                'repos' => fn ($q) => $q->latest()->take(24),
                 'posts' => fn ($q) => $q->withCount('likes')
                     ->withExists(['likes as is_liked' => function ($query) {
                         $query->where('user_id', Auth::id());
                     }])
-                    ->latest(),
+                    ->latest()
+                    ->take(12),
             ])
             ->withCount(['followers', 'following', 'posts'])
             ->firstOrFail();
@@ -79,7 +80,7 @@ class ProfileController extends Controller
             'name' => 'required|string|max:255',
             'bio' => 'nullable|string|max:120',
             'avatar' => 'nullable|image|max:1024', // 1MB
-            'avatar_url' => 'nullable|string|max:500',
+            'avatar_url' => 'nullable|url|starts_with:https://|max:500',
             'social_links' => 'nullable|array|max:10',
             'social_links.*.platform' => 'required|string',
             'social_links.*.url' => 'required|string|max:500',

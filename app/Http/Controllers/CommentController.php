@@ -23,9 +23,9 @@ class CommentController extends Controller
         return back()->with('success', 'تم إضافة التعليق بنجاح');
     }
 
-    public function destroy(Comment $comment)
+    public function destroy(Request $request, Comment $comment)
     {
-        if ($comment->user_id !== Auth::id() && Auth::user()->username !== 'hadealahmad') {
+        if (!$request->user()->can('delete', $comment)) {
             abort(403);
         }
 

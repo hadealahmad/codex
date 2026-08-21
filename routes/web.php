@@ -14,8 +14,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
     Route::get('/verification', [VerificationController::class, 'show'])->name('verification.show');
-    Route::post('/verification', [VerificationController::class, 'store'])->name('verification.store');
-    Route::post('/verification/scan', [VerificationController::class, 'checkGists'])->name('verification.scan');
+    Route::post('/verification', [VerificationController::class, 'store'])->middleware('throttle:5,1')->name('verification.store');
+    Route::post('/verification/scan', [VerificationController::class, 'checkGists'])->middleware('throttle:3,1')->name('verification.scan');
 
     // Repositories
     Route::resource('repos', \App\Http\Controllers\RepoController::class)->only(['store', 'update', 'destroy']);
@@ -62,9 +62,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::delete('/users/{id}', [\App\Http\Controllers\AdminController::class, 'deleteUser'])->name('users.delete');
     Route::post('/users/bulk-action', [\App\Http\Controllers\AdminController::class, 'bulkAction'])->name('users.bulk-action');
 
-    //    Route::get('/posts', [\App\Http\Controllers\AdminController::class, 'posts'])->name('posts');
-    //    Route::delete('/posts/{id}', [\App\Http\Controllers\AdminController::class, 'deletePost'])->name('posts.delete');
-    //
     Route::get('/repos', [\App\Http\Controllers\AdminController::class, 'repos'])->name('repos');
     Route::delete('/repos/{id}', [\App\Http\Controllers\AdminController::class, 'deleteRepo'])->name('repos.delete');
 });

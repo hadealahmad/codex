@@ -4,7 +4,7 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "concurrently -c \"#93c5fd,#fb7185,#c4b5fd\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"bunx vite\" --names=server,queue,vite --kill-others"
     },
     "devDependencies": {
         "@laravel/vite-plugin-wayfinder": "^0.1.7",

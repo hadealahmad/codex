@@ -3,12 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Repo;
+use App\Services\GitHubService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 
 class RepoController extends Controller
 {
+    public function __construct(protected GitHubService $github)
+    {
+    }
+
+    private function parseRepoUrl(string $url): ?array
+    {
+        $parts = explode('/', parse_url($url, PHP_URL_PATH) ?? '');
+        if (count($parts) < 3 || $parts[1] === '' || $parts[2] === '') {
+            return null;
+        }
+
+        return [$parts[1], $parts[2]];
+    }
+
     public function userRepos(Request $request, $username)
     {
         $user = \App\Models\User::where('username', $username)->firstOrFail();
@@ -55,88 +69,17 @@ class RepoController extends Controller
         ]);
     }
 
-    private function checkContribution($token, $owner, $repo, $username)
-    {
-        // First check: Is the user the owner?
-        if (strcasecmp($owner, $username) === 0) {
-            return true;
-        }
-
-        // Second check: Is the user a contributor (has commits)?
-        try {
-            $response = Http::withHeaders([
-                'Authorization' => 'token ' . $token,
-                'User-Agent' => 'Codex-App'
-            ])->get("https://api.github.com/repos/{$owner}/{$repo}/commits", [
-                'author' => $username,
-                'per_page' => 1
-            ]);
-
-            if ($response->successful()) {
-                $commits = $response->json();
-                return count($commits) > 0;
-            }
-        } catch (\Exception $e) {
-            // Log or ignore
-        }
-
-        return false;
-    }
-
     public function import()
     {
         $user = Auth::user();
-        
-        try {
-            $response = Http::withHeaders([
-                'Authorization' => 'token ' . $user->github_token,
-                'User-Agent' => 'Codex-App'
-            ])->get("https://api.github.com/user/repos?type=public&per_page=100");
 
-            if ($response->failed()) {
-                return back()->with('error', 'Failed to fetch repos from GitHub');
-            }
-
-            $repos = $response->json();
-            $importedCount = 0;
-
-            foreach ($repos as $repoData) {
-                // Skip codex repo or existing repos
-                if ($repoData['name'] === 'codex' || $user->repos()->where('github_repo_id', $repoData['id'])->exists()) {
-                    continue;
-                }
-
-                // Fetch README
-                $readmeContent = '';
-                $readmeResponse = Http::withHeaders([
-                    'Authorization' => 'token ' . $user->github_token,
-                    'User-Agent' => 'Codex-App',
-                    'Accept' => 'application/vnd.github.raw'
-                ])->get("https://api.github.com/repos/{$repoData['owner']['login']}/{$repoData['name']}/readme");
-
-                if ($readmeResponse->successful()) {
-                    $readmeContent = mb_substr($readmeResponse->body(), 0, 240);
-                }
-
-                $user->repos()->create([
-                    'github_repo_id' => $repoData['id'],
-                    'name' => $repoData['name'],
-                    'description' => $repoData['description'],
-                    'url' => $repoData['html_url'],
-                    'language' => $repoData['language'],
-                    'stars' => $repoData['stargazers_count'],
-                    'user_notes' => $readmeContent ?: null,
-                    'is_own_repo' => true,
-                ]);
-
-                $importedCount++;
-            }
-
-            return back()->with('success', "Successfully imported {$importedCount} repos.");
-
-        } catch (\Exception $e) {
-            return back()->with('error', 'Failed to import repos: ' . $e->getMessage());
+        if (!$user->github_token) {
+            return back()->with('error', 'انتهت صلاحية جلسة GitHub. يرجى تسجيل الدخول مرة أخرى.');
         }
+
+        \App\Jobs\ImportGithubRepos::dispatch($user);
+
+        return back()->with('success', "بدأ الاستيراد — ستظهر مشاريعك قريباً.");
     }
 
     public function store(Request $request)
@@ -147,31 +90,19 @@ class RepoController extends Controller
             'folder' => 'nullable|string|max:50',
         ]);
 
-        // Basic parsing for now. In a real app we'd use the GitHub API to fetch details.
-        // URL: https://github.com/owner/repo
-        $parts = explode('/', parse_url($request->url, PHP_URL_PATH));
-        if (count($parts) < 3) {
-            return back()->withErrors(['url' => 'Invalid GitHub URL']);
-        }
-        
-        $owner = $parts[1];
-        $repoName = $parts[2];
-        
-        // Fetch repo details from GitHub API to get correct casing, description, language, stars
-        // We use the authenticated user's token if available, or just public access
-        
         try {
             $user = Auth::user();
-            $response = Http::withHeaders([
-                'Authorization' => 'token ' . $user->github_token,
-                'User-Agent' => 'Codex-App'
-            ])->get("https://api.github.com/repos/{$owner}/{$repoName}");
 
-            if ($response->failed()) {
-                return back()->withErrors(['url' => 'Repo not found or private']);
+            if (!$parts = $this->parseRepoUrl($request->url)) {
+                return back()->withErrors(['url' => 'رابط GitHub غير صالح']);
             }
+            [$owner, $repoName] = $parts;
 
-            $data = $response->json();
+            $data = $this->github->fetchRepo($user->github_token, $owner, $repoName);
+
+            if (!$data) {
+                return back()->withErrors(['url' => 'المشروع غير موجود أو خاص']);
+            }
 
             $user->repos()->updateOrCreate(
                 ['github_repo_id' => $data['id']],
@@ -183,20 +114,20 @@ class RepoController extends Controller
                     'stars' => $data['stargazers_count'],
                     'user_notes' => $request->user_notes,
                     'folder' => Auth::user()->is_verified ? $request->folder : null,
-                    'is_own_repo' => $this->checkContribution($user->github_token, $data['owner']['login'], $data['name'], $user->username),
+                    'is_own_repo' => $this->github->checkContribution($user->github_token, $data['owner']['login'], $data['name'], $user->username),
                 ]
             );
 
-            return back()->with('success', 'Repo added successfully');
+            return back()->with('success', 'تمت إضافة المشروع بنجاح');
 
         } catch (\Exception $e) {
-            return back()->with('error', 'Failed to add repo: ' . $e->getMessage());
+            return back()->with('error', 'فشل إضافة المشروع: ' . $e->getMessage());
         }
     }
 
     public function update(Request $request, Repo $repo)
     {
-        if ($repo->user_id !== Auth::id()) {
+        if (!$request->user()->can('update', $repo)) {
             abort(403);
         }
 
@@ -211,24 +142,16 @@ class RepoController extends Controller
             
             // If URL changed, we need to fetch new data
             if ($request->url !== $repo->url) {
-                $parts = explode('/', parse_url($request->url, PHP_URL_PATH));
-                if (count($parts) < 3) {
-                    return back()->withErrors(['url' => 'Invalid GitHub URL']);
+                if (!$parts = $this->parseRepoUrl($request->url)) {
+                    return back()->withErrors(['url' => 'رابط GitHub غير صالح']);
                 }
-                
-                $owner = $parts[1];
-                $repoName = $parts[2];
+                [$owner, $repoName] = $parts;
 
-                $response = Http::withHeaders([
-                    'Authorization' => 'token ' . $user->github_token,
-                    'User-Agent' => 'Codex-App'
-                ])->get("https://api.github.com/repos/{$owner}/{$repoName}");
+                $data = $this->github->fetchRepo($user->github_token, $owner, $repoName);
 
-                if ($response->failed()) {
-                    return back()->withErrors(['url' => 'Repo not found or private']);
+                if (!$data) {
+                    return back()->withErrors(['url' => 'المشروع غير موجود أو خاص']);
                 }
-
-                $data = $response->json();
 
                 $repo->update([
                     'github_repo_id' => $data['id'],
@@ -239,7 +162,7 @@ class RepoController extends Controller
                     'stars' => $data['stargazers_count'],
                     'user_notes' => $request->user_notes,
                     'folder' => Auth::user()->is_verified ? $request->folder : null,
-                    'is_own_repo' => $this->checkContribution($user->github_token, $data['owner']['login'], $data['name'], $user->username),
+                    'is_own_repo' => $this->github->checkContribution($user->github_token, $data['owner']['login'], $data['name'], $user->username),
                 ]);
             } else {
                 $repo->update([
@@ -248,27 +171,27 @@ class RepoController extends Controller
                 ]);
             }
 
-            return back()->with('success', 'Repo updated successfully');
+            return back()->with('success', 'تم تحديث المشروع بنجاح');
 
         } catch (\Exception $e) {
-            return back()->with('error', 'Failed to update repo: ' . $e->getMessage());
+            return back()->with('error', 'فشل تحديث المشروع: ' . $e->getMessage());
         }
     }
 
-    public function refreshVerification(Repo $repo)
+    public function refreshVerification(Request $request, Repo $repo)
     {
         $user = Auth::user();
-        if ($repo->user_id !== $user->id || !$user->is_verified) {
+        if (!$request->user()->can('update', $repo) || !$user->is_verified) {
             abort(403);
         }
 
         try {
-            // Re-parse owner and repo name from URL
-            $parts = explode('/', parse_url($repo->url, PHP_URL_PATH));
-            $owner = $parts[1];
-            $repoName = $parts[2];
+            if (!$parts = $this->parseRepoUrl($repo->url)) {
+                return back()->with('error', 'رابط المشروع غير صالح');
+            }
+            [$owner, $repoName] = $parts;
 
-            $isContributor = $this->checkContribution($user->github_token, $owner, $repoName, $user->username);
+            $isContributor = $this->github->checkContribution($user->github_token, $owner, $repoName, $user->username);
             
             $repo->update(['is_own_repo' => $isContributor]);
 
@@ -278,9 +201,9 @@ class RepoController extends Controller
         }
     }
 
-    public function toggleFeature(Repo $repo)
+    public function toggleFeature(Request $request, Repo $repo)
     {
-        if ($repo->user_id !== Auth::id()) {
+        if (!$request->user()->can('update', $repo)) {
             abort(403);
         }
 
@@ -293,9 +216,9 @@ class RepoController extends Controller
         return back()->with('success', $repo->is_featured ? 'تم تمييز المشروع' : 'تم إلغاء تمييز المشروع');
     }
 
-    public function destroy(Repo $repo)
+    public function destroy(Request $request, Repo $repo)
     {
-        if ($repo->user_id !== Auth::id()) {
+        if (!$request->user()->can('delete', $repo)) {
             abort(403);
         }
         $repo->delete();

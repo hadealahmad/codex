@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\AdminController::approveVerification
-* @see app/Http/Controllers/AdminController.php:132
+* @see app/Http/Controllers/AdminController.php:99
 * @route '/admin/verifications/{id}/approve'
 */
 export const approveVerification = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -60,7 +60,7 @@ approveVerification.definition = {
 
 /**
 * @see \App\Http\Controllers\AdminController::approveVerification
-* @see app/Http/Controllers/AdminController.php:132
+* @see app/Http/Controllers/AdminController.php:99
 * @route '/admin/verifications/{id}/approve'
 */
 approveVerification.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -87,7 +87,7 @@ approveVerification.url = (args: { id: string | number } | [id: string | number 
 
 /**
 * @see \App\Http\Controllers\AdminController::approveVerification
-* @see app/Http/Controllers/AdminController.php:132
+* @see app/Http/Controllers/AdminController.php:99
 * @route '/admin/verifications/{id}/approve'
 */
 approveVerification.post = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -97,7 +97,7 @@ approveVerification.post = (args: { id: string | number } | [id: string | number
 
 /**
 * @see \App\Http\Controllers\AdminController::rejectVerification
-* @see app/Http/Controllers/AdminController.php:141
+* @see app/Http/Controllers/AdminController.php:108
 * @route '/admin/verifications/{id}/reject'
 */
 export const rejectVerification = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -112,7 +112,7 @@ rejectVerification.definition = {
 
 /**
 * @see \App\Http\Controllers\AdminController::rejectVerification
-* @see app/Http/Controllers/AdminController.php:141
+* @see app/Http/Controllers/AdminController.php:108
 * @route '/admin/verifications/{id}/reject'
 */
 rejectVerification.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -139,7 +139,7 @@ rejectVerification.url = (args: { id: string | number } | [id: string | number ]
 
 /**
 * @see \App\Http\Controllers\AdminController::rejectVerification
-* @see app/Http/Controllers/AdminController.php:141
+* @see app/Http/Controllers/AdminController.php:108
 * @route '/admin/verifications/{id}/reject'
 */
 rejectVerification.post = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -149,7 +149,7 @@ rejectVerification.post = (args: { id: string | number } | [id: string | number 
 
 /**
 * @see \App\Http\Controllers\AdminController::verifyUser
-* @see app/Http/Controllers/AdminController.php:149
+* @see app/Http/Controllers/AdminController.php:116
 * @route '/admin/users/{id}/verify'
 */
 export const verifyUser = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -164,7 +164,7 @@ verifyUser.definition = {
 
 /**
 * @see \App\Http\Controllers\AdminController::verifyUser
-* @see app/Http/Controllers/AdminController.php:149
+* @see app/Http/Controllers/AdminController.php:116
 * @route '/admin/users/{id}/verify'
 */
 verifyUser.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -191,7 +191,7 @@ verifyUser.url = (args: { id: string | number } | [id: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\AdminController::verifyUser
-* @see app/Http/Controllers/AdminController.php:149
+* @see app/Http/Controllers/AdminController.php:116
 * @route '/admin/users/{id}/verify'
 */
 verifyUser.post = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -201,7 +201,7 @@ verifyUser.post = (args: { id: string | number } | [id: string | number ] | stri
 
 /**
 * @see \App\Http\Controllers\AdminController::unverifyUser
-* @see app/Http/Controllers/AdminController.php:157
+* @see app/Http/Controllers/AdminController.php:124
 * @route '/admin/users/{id}/unverify'
 */
 export const unverifyUser = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -216,7 +216,7 @@ unverifyUser.definition = {
 
 /**
 * @see \App\Http\Controllers\AdminController::unverifyUser
-* @see app/Http/Controllers/AdminController.php:157
+* @see app/Http/Controllers/AdminController.php:124
 * @route '/admin/users/{id}/unverify'
 */
 unverifyUser.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -243,7 +243,7 @@ unverifyUser.url = (args: { id: string | number } | [id: string | number ] | str
 
 /**
 * @see \App\Http\Controllers\AdminController::unverifyUser
-* @see app/Http/Controllers/AdminController.php:157
+* @see app/Http/Controllers/AdminController.php:124
 * @route '/admin/users/{id}/unverify'
 */
 unverifyUser.post = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -253,7 +253,7 @@ unverifyUser.post = (args: { id: string | number } | [id: string | number ] | st
 
 /**
 * @see \App\Http\Controllers\AdminController::banUser
-* @see app/Http/Controllers/AdminController.php:165
+* @see app/Http/Controllers/AdminController.php:132
 * @route '/admin/users/{id}/ban'
 */
 export const banUser = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -268,7 +268,7 @@ banUser.definition = {
 
 /**
 * @see \App\Http\Controllers\AdminController::banUser
-* @see app/Http/Controllers/AdminController.php:165
+* @see app/Http/Controllers/AdminController.php:132
 * @route '/admin/users/{id}/ban'
 */
 banUser.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -295,7 +295,7 @@ banUser.url = (args: { id: string | number } | [id: string | number ] | string |
 
 /**
 * @see \App\Http\Controllers\AdminController::banUser
-* @see app/Http/Controllers/AdminController.php:165
+* @see app/Http/Controllers/AdminController.php:132
 * @route '/admin/users/{id}/ban'
 */
 banUser.post = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -305,7 +305,7 @@ banUser.post = (args: { id: string | number } | [id: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\AdminController::unbanUser
-* @see app/Http/Controllers/AdminController.php:173
+* @see app/Http/Controllers/AdminController.php:140
 * @route '/admin/users/{id}/unban'
 */
 export const unbanUser = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -320,7 +320,7 @@ unbanUser.definition = {
 
 /**
 * @see \App\Http\Controllers\AdminController::unbanUser
-* @see app/Http/Controllers/AdminController.php:173
+* @see app/Http/Controllers/AdminController.php:140
 * @route '/admin/users/{id}/unban'
 */
 unbanUser.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -347,7 +347,7 @@ unbanUser.url = (args: { id: string | number } | [id: string | number ] | string
 
 /**
 * @see \App\Http\Controllers\AdminController::unbanUser
-* @see app/Http/Controllers/AdminController.php:173
+* @see app/Http/Controllers/AdminController.php:140
 * @route '/admin/users/{id}/unban'
 */
 unbanUser.post = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -357,7 +357,7 @@ unbanUser.post = (args: { id: string | number } | [id: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\AdminController::deleteUser
-* @see app/Http/Controllers/AdminController.php:181
+* @see app/Http/Controllers/AdminController.php:148
 * @route '/admin/users/{id}'
 */
 export const deleteUser = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -372,7 +372,7 @@ deleteUser.definition = {
 
 /**
 * @see \App\Http\Controllers\AdminController::deleteUser
-* @see app/Http/Controllers/AdminController.php:181
+* @see app/Http/Controllers/AdminController.php:148
 * @route '/admin/users/{id}'
 */
 deleteUser.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -399,7 +399,7 @@ deleteUser.url = (args: { id: string | number } | [id: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\AdminController::deleteUser
-* @see app/Http/Controllers/AdminController.php:181
+* @see app/Http/Controllers/AdminController.php:148
 * @route '/admin/users/{id}'
 */
 deleteUser.delete = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -409,7 +409,7 @@ deleteUser.delete = (args: { id: string | number } | [id: string | number ] | st
 
 /**
 * @see \App\Http\Controllers\AdminController::bulkAction
-* @see app/Http/Controllers/AdminController.php:189
+* @see app/Http/Controllers/AdminController.php:156
 * @route '/admin/users/bulk-action'
 */
 export const bulkAction = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -424,7 +424,7 @@ bulkAction.definition = {
 
 /**
 * @see \App\Http\Controllers\AdminController::bulkAction
-* @see app/Http/Controllers/AdminController.php:189
+* @see app/Http/Controllers/AdminController.php:156
 * @route '/admin/users/bulk-action'
 */
 bulkAction.url = (options?: RouteQueryOptions) => {
@@ -433,7 +433,7 @@ bulkAction.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\AdminController::bulkAction
-* @see app/Http/Controllers/AdminController.php:189
+* @see app/Http/Controllers/AdminController.php:156
 * @route '/admin/users/bulk-action'
 */
 bulkAction.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -443,7 +443,7 @@ bulkAction.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\AdminController::repos
-* @see app/Http/Controllers/AdminController.php:98
+* @see app/Http/Controllers/AdminController.php:65
 * @route '/admin/repos'
 */
 export const repos = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -458,7 +458,7 @@ repos.definition = {
 
 /**
 * @see \App\Http\Controllers\AdminController::repos
-* @see app/Http/Controllers/AdminController.php:98
+* @see app/Http/Controllers/AdminController.php:65
 * @route '/admin/repos'
 */
 repos.url = (options?: RouteQueryOptions) => {
@@ -467,7 +467,7 @@ repos.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\AdminController::repos
-* @see app/Http/Controllers/AdminController.php:98
+* @see app/Http/Controllers/AdminController.php:65
 * @route '/admin/repos'
 */
 repos.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -477,7 +477,7 @@ repos.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\AdminController::repos
-* @see app/Http/Controllers/AdminController.php:98
+* @see app/Http/Controllers/AdminController.php:65
 * @route '/admin/repos'
 */
 repos.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -487,7 +487,7 @@ repos.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\AdminController::deleteRepo
-* @see app/Http/Controllers/AdminController.php:232
+* @see app/Http/Controllers/AdminController.php:191
 * @route '/admin/repos/{id}'
 */
 export const deleteRepo = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -502,7 +502,7 @@ deleteRepo.definition = {
 
 /**
 * @see \App\Http\Controllers\AdminController::deleteRepo
-* @see app/Http/Controllers/AdminController.php:232
+* @see app/Http/Controllers/AdminController.php:191
 * @route '/admin/repos/{id}'
 */
 deleteRepo.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -529,7 +529,7 @@ deleteRepo.url = (args: { id: string | number } | [id: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\AdminController::deleteRepo
-* @see app/Http/Controllers/AdminController.php:232
+* @see app/Http/Controllers/AdminController.php:191
 * @route '/admin/repos/{id}'
 */
 deleteRepo.delete = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({

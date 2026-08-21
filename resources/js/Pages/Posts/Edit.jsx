@@ -11,8 +11,8 @@ import { toast } from "sonner";
 export default function Edit({ post }) {
     const { data, setData, post: submitPost, processing, errors } = useForm({
         title: post.title || '',
-        content: post.content || '',
-        thumbnail: null,
+        body_markdown: post.body_markdown || '',
+        cover_image: null,
         _method: 'PUT',
     });
 
@@ -31,7 +31,7 @@ export default function Edit({ post }) {
             <div>
                 <div className="flex justify-between items-center mb-6">
                     <h1 className="text-3xl font-bold">تعديل المنشور</h1>
-                    <Button onClick={submit} disabled={processing || data.content.length < 10 || !data.title} className="cursor-pointer">
+                    <Button onClick={submit} disabled={processing || data.body_markdown.length < 10 || !data.title} className="cursor-pointer">
                         {processing ? 'جاري التحديث...' : 'تحديث'}
                     </Button>
                 </div>
@@ -43,21 +43,21 @@ export default function Edit({ post }) {
                                 <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                                     صورة مصغرة
                                 </label>
-                                {post.thumbnail && (
+                                {post.cover_image_path && (
                                     <div className="mb-2 w-32 h-20 rounded overflow-hidden border">
-                                        <img src={post.thumbnail} alt="Current" className="w-full h-full object-cover" />
+                                        <img src={post.cover_image_path} alt="Current" className="w-full h-full object-cover" />
                                     </div>
                                 )}
                                 <input
                                     type="file"
                                     accept="image/*"
                                     className="flex w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-                                    onChange={e => setData('thumbnail', e.target.files[0])}
+                                    onChange={e => setData('cover_image', e.target.files[0])}
                                 />
                                 <p className="text-[10px] text-muted-foreground">
                                     الحد الأقصى: 512KB. اتركها فارغة للإبقاء على الصورة الحالية.
                                 </p>
-                                {errors.thumbnail && <p className="text-destructive text-xs">{errors.thumbnail}</p>}
+                                {errors.cover_image && <p className="text-destructive text-xs">{errors.cover_image}</p>}
                             </div>
                         </CardContent>
                     </Card>
@@ -91,8 +91,8 @@ export default function Edit({ post }) {
                                     <Textarea
                                         placeholder="اكتب هنا باستخدام Markdown... (# عنوان, **عريض**, - قائمة)"
                                         className="min-h-[500px] border-0 focus-visible:ring-0 resize-none text-lg p-6"
-                                        value={data.content}
-                                        onChange={e => setData('content', e.target.value)}
+                                        value={data.body_markdown}
+                                        onChange={e => setData('body_markdown', e.target.value)}
                                         dir="auto"
                                     />
                                 </CardContent>
@@ -101,8 +101,8 @@ export default function Edit({ post }) {
                         <TabsContent value="preview">
                             <Card className="min-h-[500px]">
                                 <CardContent className="p-8 prose dark:prose-invert max-w-none break-words" dir="auto">
-                                    {data.content ? (
-                                        <Markdown>{data.content}</Markdown>
+                                    {data.body_markdown ? (
+                                        <Markdown>{data.body_markdown}</Markdown>
                                     ) : (
                                         <p className="text-muted-foreground text-center mt-20">لا يوجد محتوى للمعاينة.</p>
                                     )}
@@ -110,7 +110,7 @@ export default function Edit({ post }) {
                             </Card>
                         </TabsContent>
                     </Tabs>
-                    {errors.content && <p className="text-destructive font-medium">{errors.content}</p>}
+                    {errors.body_markdown && <p className="text-destructive font-medium">{errors.body_markdown}</p>}
                 </div>
             </div>
         </Layout >

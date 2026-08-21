@@ -35,6 +35,10 @@ class AuthController extends Controller
                 'email_verified_at' => now(), // Auto verify email from GitHub
             ]);
 
+            if ($user->status === 'banned') {
+                return redirect('/')->with('error', 'تم حظر حسابك.');
+            }
+
             Auth::login($user);
 
             return redirect('/');

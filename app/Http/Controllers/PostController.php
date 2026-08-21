@@ -21,15 +21,6 @@ class PostController extends Controller
     {
         $this->imageService = $imageService;
     }
-    public function index()
-    {
-        return Inertia::render('Posts/Index', [
-            'posts' => Post::with('user')
-                ->latest()
-                ->paginate(10)
-        ]);
-    }
-
     public function create()
     {
         return Inertia::render('Posts/Create');
@@ -46,7 +37,7 @@ class PostController extends Controller
         return redirect()->route('posts.show', ['username' => Auth::user()->username, 'slug' => $post->slug]);
     }
 
-    public function show($username, $slug)
+    public function show($username, $slug, Request $request)
     {
         $post = Post::where('slug', $slug)
             ->whereHas('user', function ($query) use ($username) {
@@ -58,6 +49,12 @@ class PostController extends Controller
                 $query->where('user_id', Auth::id());
             }])
             ->firstOrFail();
+
+        $viewed = $request->session()->get('viewed_posts', []);
+        if (!in_array($post->id, $viewed)) {
+            $post->increment('views_count');
+            $request->session()->put('viewed_posts', array_merge($viewed, [$post->id]));
+        }
 
         return Inertia::render('Posts/Show', [
             'post' => $post
@@ -79,9 +76,9 @@ class PostController extends Controller
         ]);
     }
 
-    public function edit(Post $post)
+    public function edit(Request $request, Post $post)
     {
-        if ($post->user_id !== Auth::id()) {
+        if (!$request->user()->can('update', $post)) {
             abort(403);
         }
 
@@ -92,21 +89,21 @@ class PostController extends Controller
 
     public function update(Request $request, Post $post)
     {
-        if ($post->user_id !== Auth::id()) {
+        if (!$request->user()->can('update', $post)) {
             abort(403);
         }
 
         $request->validate([
             'title' => 'required|string|max:255',
-            'content' => 'required|string|min:10',
-            'thumbnail' => 'nullable|image|max:512', // 512KB max
+            'body_markdown' => 'required|string|min:10',
+            'cover_image' => 'nullable|image|max:512',
+            'excerpt' => 'nullable|string|max:160',
+            'canonical_url' => 'nullable|url|max:255',
         ]);
 
-
-
-        if ($request->hasFile('thumbnail')) {
+        if ($request->hasFile('cover_image')) {
             $thumbnailPath = $this->imageService->store(
-                $request->file('thumbnail'),
+                $request->file('cover_image'),
                 'thumbnails',
                 80
             );
@@ -114,15 +111,21 @@ class PostController extends Controller
         }
 
         $post->title = $request->title;
-        $post->body_markdown = $request->content;
+        $post->body_markdown = $request->body_markdown;
+        if ($request->filled('excerpt')) {
+            $post->excerpt = $request->excerpt;
+        }
+        if ($request->has('canonical_url')) {
+            $post->canonical_url = $request->canonical_url;
+        }
         $post->save();
 
         return redirect()->route('posts.show', ['username' => Auth::user()->username, 'slug' => $post->slug]);
     }
 
-    public function destroy(Post $post)
+    public function destroy(Request $request, Post $post)
     {
-        if ($post->user_id !== Auth::id()) {
+        if (!$request->user()->can('delete', $post)) {
             abort(403);
         }
 

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../wayfinder'
 /**
 * @see \App\Http\Controllers\FeedController::home
-* @see app/Http/Controllers/FeedController.php:12
+* @see app/Http/Controllers/FeedController.php:16
 * @route '/'
 */
 export const home = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ home.definition = {
 
 /**
 * @see \App\Http\Controllers\FeedController::home
-* @see app/Http/Controllers/FeedController.php:12
+* @see app/Http/Controllers/FeedController.php:16
 * @route '/'
 */
 home.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ home.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\FeedController::home
-* @see app/Http/Controllers/FeedController.php:12
+* @see app/Http/Controllers/FeedController.php:16
 * @route '/'
 */
 home.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ home.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\FeedController::home
-* @see app/Http/Controllers/FeedController.php:12
+* @see app/Http/Controllers/FeedController.php:16
 * @route '/'
 */
 home.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ home.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\FeedController::feed
-* @see app/Http/Controllers/FeedController.php:12
+* @see app/Http/Controllers/FeedController.php:16
 * @route '/feed'
 */
 export const feed = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -60,7 +60,7 @@ feed.definition = {
 
 /**
 * @see \App\Http\Controllers\FeedController::feed
-* @see app/Http/Controllers/FeedController.php:12
+* @see app/Http/Controllers/FeedController.php:16
 * @route '/feed'
 */
 feed.url = (options?: RouteQueryOptions) => {
@@ -69,7 +69,7 @@ feed.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\FeedController::feed
-* @see app/Http/Controllers/FeedController.php:12
+* @see app/Http/Controllers/FeedController.php:16
 * @route '/feed'
 */
 feed.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -79,7 +79,7 @@ feed.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\FeedController::feed
-* @see app/Http/Controllers/FeedController.php:12
+* @see app/Http/Controllers/FeedController.php:16
 * @route '/feed'
 */
 feed.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -133,7 +133,7 @@ login.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\AuthController::logout
-* @see app/Http/Controllers/AuthController.php:46
+* @see app/Http/Controllers/AuthController.php:50
 * @route '/logout'
 */
 export const logout = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -148,7 +148,7 @@ logout.definition = {
 
 /**
 * @see \App\Http\Controllers\AuthController::logout
-* @see app/Http/Controllers/AuthController.php:46
+* @see app/Http/Controllers/AuthController.php:50
 * @route '/logout'
 */
 logout.url = (options?: RouteQueryOptions) => {
@@ -157,7 +157,7 @@ logout.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\AuthController::logout
-* @see app/Http/Controllers/AuthController.php:46
+* @see app/Http/Controllers/AuthController.php:50
 * @route '/logout'
 */
 logout.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({

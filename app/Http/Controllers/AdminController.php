@@ -62,39 +62,6 @@ class AdminController extends Controller
         ]);
     }
 
-    public function posts(Request $request)
-    {
-        $perPage = $request->input('per_page', 15);
-        $query = Post::with('user');
-
-        // Search
-        if ($request->has('search')) {
-            $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('content', 'like', "%{$search}%")
-                  ->orWhereHas('user', function($uq) use ($search) {
-                      $uq->where('name', 'like', "%{$search}%")
-                        ->orWhere('username', 'like', "%{$search}%");
-                  });
-            });
-        }
-
-        $posts = $query->orderBy('created_at', 'desc')
-            ->paginate($perPage)
-            ->withQueryString();
-
-        return Inertia::render('Admin/Posts', [
-            'posts' => $posts,
-            'stats' => [
-                'users' => User::count(),
-                'posts' => Post::count(),
-                'repos' => Repo::count(),
-                'pending_verifications' => Verification::where('status', 'pending')->count(),
-            ],
-            'filters' => $request->only(['search', 'per_page']),
-        ]);
-    }
-
     public function repos(Request $request)
     {
         $perPage = $request->input('per_page', 15);
@@ -219,14 +186,6 @@ class AdminController extends Controller
             default:
                 return back()->with('error', 'إجراء غير صالح.');
         }
-    }
-
-    public function deletePost($id)
-    {
-        $post = Post::findOrFail($id);
-        $post->delete();
-        
-        return back()->with('success', 'تم حذف المنشور بنجاح.');
     }
 
     public function deleteRepo($id)

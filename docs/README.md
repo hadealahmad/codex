@@ -36,7 +36,7 @@ docs/
 | Backend    | PHP 8.2+, Laravel 12 |
 | Frontend   | React 19, Inertia.js 2, Vite 7 |
 | Styling    | Tailwind CSS 4, shadcn/ui (Radix), lucide-react icons, sonner toasts |
-| Admin      | Filament 4 (`/admin`) |
+| Admin      | Custom Inertia dashboard (`/admin/*`) |
 | Auth       | Laravel Socialite (GitHub OAuth) |
 | Images     | Intervention Image 3 (WebP conversion) |
 | DB         | SQLite (default/local), MySQL/MariaDB (production) |

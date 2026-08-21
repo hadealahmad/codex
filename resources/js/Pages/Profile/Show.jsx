@@ -481,7 +481,7 @@ export default function Show({ profile, activeTab }) {
                                             {profile.latest_post.title || "بدون عنوان"}
                                         </h3>
                                         <div className="prose prose-sm dark:prose-invert max-w-none line-clamp-3 leading-relaxed opacity-90 text-sm">
-                                            {stripMarkdown(profile.latest_post.content)}
+                                            {stripMarkdown(profile.latest_post.body_markdown)}
                                         </div>
                                     </div>
                                 </Link>

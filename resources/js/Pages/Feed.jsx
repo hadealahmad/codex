@@ -166,7 +166,7 @@ export default function Feed({ posts, tab, recommendedUsers, topRepos }) {
                                                 {post.title}
                                             </h3>
                                             <p className="text-muted-foreground text-sm line-clamp-3 leading-relaxed" dir="auto">
-                                                {stripMarkdown(post.content)}
+                                                {stripMarkdown(post.body_markdown)}
                                             </p>
                                         </Link>
 

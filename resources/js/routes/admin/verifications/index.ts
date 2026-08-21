@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\AdminController::approve
-* @see app/Http/Controllers/AdminController.php:132
+* @see app/Http/Controllers/AdminController.php:99
 * @route '/admin/verifications/{id}/approve'
 */
 export const approve = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ approve.definition = {
 
 /**
 * @see \App\Http\Controllers\AdminController::approve
-* @see app/Http/Controllers/AdminController.php:132
+* @see app/Http/Controllers/AdminController.php:99
 * @route '/admin/verifications/{id}/approve'
 */
 approve.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -43,7 +43,7 @@ approve.url = (args: { id: string | number } | [id: string | number ] | string |
 
 /**
 * @see \App\Http\Controllers\AdminController::approve
-* @see app/Http/Controllers/AdminController.php:132
+* @see app/Http/Controllers/AdminController.php:99
 * @route '/admin/verifications/{id}/approve'
 */
 approve.post = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -53,7 +53,7 @@ approve.post = (args: { id: string | number } | [id: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\AdminController::reject
-* @see app/Http/Controllers/AdminController.php:141
+* @see app/Http/Controllers/AdminController.php:108
 * @route '/admin/verifications/{id}/reject'
 */
 export const reject = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -68,7 +68,7 @@ reject.definition = {
 
 /**
 * @see \App\Http\Controllers\AdminController::reject
-* @see app/Http/Controllers/AdminController.php:141
+* @see app/Http/Controllers/AdminController.php:108
 * @route '/admin/verifications/{id}/reject'
 */
 reject.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -95,7 +95,7 @@ reject.url = (args: { id: string | number } | [id: string | number ] | string | 
 
 /**
 * @see \App\Http\Controllers\AdminController::reject
-* @see app/Http/Controllers/AdminController.php:141
+* @see app/Http/Controllers/AdminController.php:108
 * @route '/admin/verifications/{id}/reject'
 */
 reject.post = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({

@@ -5,10 +5,11 @@ namespace App\Models;
 use App\Jobs\FetchOpenGraphData;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'user_id',
@@ -25,11 +26,6 @@ class Post extends Model
     protected $casts = [
         'published_at' => 'datetime',
         'og_data' => 'array',
-    ];
-
-    protected $appends = [
-        'content',
-        'thumbnail',
     ];
 
     protected static function booted()
@@ -56,17 +52,6 @@ class Post extends Model
         }
 
         return asset('storage/' . $value);
-    }
-
-    // Compatibility accessors for old frontend field names
-    public function getContentAttribute()
-    {
-        return $this->body_markdown;
-    }
-
-    public function getThumbnailAttribute()
-    {
-        return $this->cover_image_path;
     }
 
     public function user()

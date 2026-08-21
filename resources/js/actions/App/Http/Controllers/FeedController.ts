@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\FeedController::index
-* @see app/Http/Controllers/FeedController.php:12
+* @see app/Http/Controllers/FeedController.php:16
 * @route '/'
 */
 const index980bb49ee7ae63891f1d891d2fbcf1c9 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index980bb49ee7ae63891f1d891d2fbcf1c9.definition = {
 
 /**
 * @see \App\Http\Controllers\FeedController::index
-* @see app/Http/Controllers/FeedController.php:12
+* @see app/Http/Controllers/FeedController.php:16
 * @route '/'
 */
 index980bb49ee7ae63891f1d891d2fbcf1c9.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index980bb49ee7ae63891f1d891d2fbcf1c9.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\FeedController::index
-* @see app/Http/Controllers/FeedController.php:12
+* @see app/Http/Controllers/FeedController.php:16
 * @route '/'
 */
 index980bb49ee7ae63891f1d891d2fbcf1c9.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index980bb49ee7ae63891f1d891d2fbcf1c9.get = (options?: RouteQueryOptions): Route
 
 /**
 * @see \App\Http\Controllers\FeedController::index
-* @see app/Http/Controllers/FeedController.php:12
+* @see app/Http/Controllers/FeedController.php:16
 * @route '/'
 */
 index980bb49ee7ae63891f1d891d2fbcf1c9.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index980bb49ee7ae63891f1d891d2fbcf1c9.head = (options?: RouteQueryOptions): Rout
 
 /**
 * @see \App\Http\Controllers\FeedController::index
-* @see app/Http/Controllers/FeedController.php:12
+* @see app/Http/Controllers/FeedController.php:16
 * @route '/feed'
 */
 const index8b72587d67a3b9f33de91798fece91d9 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -60,7 +60,7 @@ index8b72587d67a3b9f33de91798fece91d9.definition = {
 
 /**
 * @see \App\Http\Controllers\FeedController::index
-* @see app/Http/Controllers/FeedController.php:12
+* @see app/Http/Controllers/FeedController.php:16
 * @route '/feed'
 */
 index8b72587d67a3b9f33de91798fece91d9.url = (options?: RouteQueryOptions) => {
@@ -69,7 +69,7 @@ index8b72587d67a3b9f33de91798fece91d9.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\FeedController::index
-* @see app/Http/Controllers/FeedController.php:12
+* @see app/Http/Controllers/FeedController.php:16
 * @route '/feed'
 */
 index8b72587d67a3b9f33de91798fece91d9.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -79,7 +79,7 @@ index8b72587d67a3b9f33de91798fece91d9.get = (options?: RouteQueryOptions): Route
 
 /**
 * @see \App\Http\Controllers\FeedController::index
-* @see app/Http/Controllers/FeedController.php:12
+* @see app/Http/Controllers/FeedController.php:16
 * @route '/feed'
 */
 index8b72587d67a3b9f33de91798fece91d9.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -87,6 +87,11 @@ index8b72587d67a3b9f33de91798fece91d9.head = (options?: RouteQueryOptions): Rout
     method: 'head',
 })
 
+/**
+* Multiple routes resolve to \App\Http\Controllers\FeedController::index, so this export is a
+* dictionary keyed by URI rather than a callable. Call a specific route with `index['<uri>'](...)`,
+* or import the route by name from your generated `routes/` directory.
+*/
 export const index = {
     '/': index980bb49ee7ae63891f1d891d2fbcf1c9,
     '/feed': index8b72587d67a3b9f33de91798fece91d9,

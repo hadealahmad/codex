@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\RepoController::store
-* @see app/Http/Controllers/RepoController.php:142
+* @see app/Http/Controllers/RepoController.php:85
 * @route '/repos'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\RepoController::store
-* @see app/Http/Controllers/RepoController.php:142
+* @see app/Http/Controllers/RepoController.php:85
 * @route '/repos'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\RepoController::store
-* @see app/Http/Controllers/RepoController.php:142
+* @see app/Http/Controllers/RepoController.php:85
 * @route '/repos'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\RepoController::update
-* @see app/Http/Controllers/RepoController.php:197
+* @see app/Http/Controllers/RepoController.php:128
 * @route '/repos/{repo}'
 */
 export const update = (args: { repo: number | { id: number } } | [repo: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -50,7 +50,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\RepoController::update
-* @see app/Http/Controllers/RepoController.php:197
+* @see app/Http/Controllers/RepoController.php:128
 * @route '/repos/{repo}'
 */
 update.url = (args: { repo: number | { id: number } } | [repo: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -83,7 +83,7 @@ update.url = (args: { repo: number | { id: number } } | [repo: number | { id: nu
 
 /**
 * @see \App\Http\Controllers\RepoController::update
-* @see app/Http/Controllers/RepoController.php:197
+* @see app/Http/Controllers/RepoController.php:128
 * @route '/repos/{repo}'
 */
 update.put = (args: { repo: number | { id: number } } | [repo: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -93,7 +93,7 @@ update.put = (args: { repo: number | { id: number } } | [repo: number | { id: nu
 
 /**
 * @see \App\Http\Controllers\RepoController::update
-* @see app/Http/Controllers/RepoController.php:197
+* @see app/Http/Controllers/RepoController.php:128
 * @route '/repos/{repo}'
 */
 update.patch = (args: { repo: number | { id: number } } | [repo: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -103,7 +103,7 @@ update.patch = (args: { repo: number | { id: number } } | [repo: number | { id: 
 
 /**
 * @see \App\Http\Controllers\RepoController::destroy
-* @see app/Http/Controllers/RepoController.php:296
+* @see app/Http/Controllers/RepoController.php:219
 * @route '/repos/{repo}'
 */
 export const destroy = (args: { repo: number | { id: number } } | [repo: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -118,7 +118,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\RepoController::destroy
-* @see app/Http/Controllers/RepoController.php:296
+* @see app/Http/Controllers/RepoController.php:219
 * @route '/repos/{repo}'
 */
 destroy.url = (args: { repo: number | { id: number } } | [repo: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -151,7 +151,7 @@ destroy.url = (args: { repo: number | { id: number } } | [repo: number | { id: n
 
 /**
 * @see \App\Http\Controllers\RepoController::destroy
-* @see app/Http/Controllers/RepoController.php:296
+* @see app/Http/Controllers/RepoController.php:219
 * @route '/repos/{repo}'
 */
 destroy.delete = (args: { repo: number | { id: number } } | [repo: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -161,7 +161,7 @@ destroy.delete = (args: { repo: number | { id: number } } | [repo: number | { id
 
 /**
 * @see \App\Http\Controllers\RepoController::importMethod
-* @see app/Http/Controllers/RepoController.php:86
+* @see app/Http/Controllers/RepoController.php:72
 * @route '/repos/import'
 */
 export const importMethod = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -176,7 +176,7 @@ importMethod.definition = {
 
 /**
 * @see \App\Http\Controllers\RepoController::importMethod
-* @see app/Http/Controllers/RepoController.php:86
+* @see app/Http/Controllers/RepoController.php:72
 * @route '/repos/import'
 */
 importMethod.url = (options?: RouteQueryOptions) => {
@@ -185,7 +185,7 @@ importMethod.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\RepoController::importMethod
-* @see app/Http/Controllers/RepoController.php:86
+* @see app/Http/Controllers/RepoController.php:72
 * @route '/repos/import'
 */
 importMethod.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -195,7 +195,7 @@ importMethod.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\RepoController::toggleFeature
-* @see app/Http/Controllers/RepoController.php:281
+* @see app/Http/Controllers/RepoController.php:204
 * @route '/repos/{repo}/toggle-feature'
 */
 export const toggleFeature = (args: { repo: number | { id: number } } | [repo: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -210,7 +210,7 @@ toggleFeature.definition = {
 
 /**
 * @see \App\Http\Controllers\RepoController::toggleFeature
-* @see app/Http/Controllers/RepoController.php:281
+* @see app/Http/Controllers/RepoController.php:204
 * @route '/repos/{repo}/toggle-feature'
 */
 toggleFeature.url = (args: { repo: number | { id: number } } | [repo: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -243,7 +243,7 @@ toggleFeature.url = (args: { repo: number | { id: number } } | [repo: number | {
 
 /**
 * @see \App\Http\Controllers\RepoController::toggleFeature
-* @see app/Http/Controllers/RepoController.php:281
+* @see app/Http/Controllers/RepoController.php:204
 * @route '/repos/{repo}/toggle-feature'
 */
 toggleFeature.post = (args: { repo: number | { id: number } } | [repo: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -253,7 +253,7 @@ toggleFeature.post = (args: { repo: number | { id: number } } | [repo: number | 
 
 /**
 * @see \App\Http\Controllers\RepoController::refreshVerification
-* @see app/Http/Controllers/RepoController.php:258
+* @see app/Http/Controllers/RepoController.php:181
 * @route '/repos/{repo}/refresh-verification'
 */
 export const refreshVerification = (args: { repo: number | { id: number } } | [repo: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -268,7 +268,7 @@ refreshVerification.definition = {
 
 /**
 * @see \App\Http\Controllers\RepoController::refreshVerification
-* @see app/Http/Controllers/RepoController.php:258
+* @see app/Http/Controllers/RepoController.php:181
 * @route '/repos/{repo}/refresh-verification'
 */
 refreshVerification.url = (args: { repo: number | { id: number } } | [repo: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -301,7 +301,7 @@ refreshVerification.url = (args: { repo: number | { id: number } } | [repo: numb
 
 /**
 * @see \App\Http\Controllers\RepoController::refreshVerification
-* @see app/Http/Controllers/RepoController.php:258
+* @see app/Http/Controllers/RepoController.php:181
 * @route '/repos/{repo}/refresh-verification'
 */
 refreshVerification.post = (args: { repo: number | { id: number } } | [repo: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -311,7 +311,7 @@ refreshVerification.post = (args: { repo: number | { id: number } } | [repo: num
 
 /**
 * @see \App\Http\Controllers\RepoController::user_repos
-* @see app/Http/Controllers/RepoController.php:12
+* @see app/Http/Controllers/RepoController.php:26
 * @route '/@{username}/repos'
 */
 export const user_repos = (args: { username: string | number } | [username: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -326,7 +326,7 @@ user_repos.definition = {
 
 /**
 * @see \App\Http\Controllers\RepoController::user_repos
-* @see app/Http/Controllers/RepoController.php:12
+* @see app/Http/Controllers/RepoController.php:26
 * @route '/@{username}/repos'
 */
 user_repos.url = (args: { username: string | number } | [username: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -353,7 +353,7 @@ user_repos.url = (args: { username: string | number } | [username: string | numb
 
 /**
 * @see \App\Http\Controllers\RepoController::user_repos
-* @see app/Http/Controllers/RepoController.php:12
+* @see app/Http/Controllers/RepoController.php:26
 * @route '/@{username}/repos'
 */
 user_repos.get = (args: { username: string | number } | [username: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -363,7 +363,7 @@ user_repos.get = (args: { username: string | number } | [username: string | numb
 
 /**
 * @see \App\Http\Controllers\RepoController::user_repos
-* @see app/Http/Controllers/RepoController.php:12
+* @see app/Http/Controllers/RepoController.php:26
 * @route '/@{username}/repos'
 */
 user_repos.head = (args: { username: string | number } | [username: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({

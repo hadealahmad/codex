@@ -11,14 +11,14 @@ class LikeController extends Controller
     public function toggle(Post $post)
     {
         $user = Auth::user();
-        
-        if ($user->likedPosts()->where('post_id', $post->id)->exists()) {
-            $user->likedPosts()->detach($post->id);
-            $liked = false;
-        } else {
-            $user->likedPosts()->attach($post->id);
-            $liked = true;
+
+        $attached = $user->likedPosts()->syncWithoutDetaching([$post->id])['attached'] === [$post->id];
+
+        if ($attached) {
+            return back();
         }
+
+        $user->likedPosts()->detach($post->id);
 
         return back();
     }

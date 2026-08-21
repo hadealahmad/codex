@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\ProfileController::update
-* @see app/Http/Controllers/ProfileController.php:74
+* @see app/Http/Controllers/ProfileController.php:75
 * @route '/profile/update'
 */
 export const update = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\ProfileController::update
-* @see app/Http/Controllers/ProfileController.php:74
+* @see app/Http/Controllers/ProfileController.php:75
 * @route '/profile/update'
 */
 update.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ update.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\ProfileController::update
-* @see app/Http/Controllers/ProfileController.php:74
+* @see app/Http/Controllers/ProfileController.php:75
 * @route '/profile/update'
 */
 update.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ update.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\ProfileController::revertAvatar
-* @see app/Http/Controllers/ProfileController.php:111
+* @see app/Http/Controllers/ProfileController.php:112
 * @route '/profile/revert-avatar'
 */
 export const revertAvatar = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -50,7 +50,7 @@ revertAvatar.definition = {
 
 /**
 * @see \App\Http\Controllers\ProfileController::revertAvatar
-* @see app/Http/Controllers/ProfileController.php:111
+* @see app/Http/Controllers/ProfileController.php:112
 * @route '/profile/revert-avatar'
 */
 revertAvatar.url = (options?: RouteQueryOptions) => {
@@ -59,7 +59,7 @@ revertAvatar.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\ProfileController::revertAvatar
-* @see app/Http/Controllers/ProfileController.php:111
+* @see app/Http/Controllers/ProfileController.php:112
 * @route '/profile/revert-avatar'
 */
 revertAvatar.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -69,7 +69,7 @@ revertAvatar.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\ProfileController::updateSocialLinks
-* @see app/Http/Controllers/ProfileController.php:123
+* @see app/Http/Controllers/ProfileController.php:124
 * @route '/profile/social-links'
 */
 export const updateSocialLinks = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -84,7 +84,7 @@ updateSocialLinks.definition = {
 
 /**
 * @see \App\Http\Controllers\ProfileController::updateSocialLinks
-* @see app/Http/Controllers/ProfileController.php:123
+* @see app/Http/Controllers/ProfileController.php:124
 * @route '/profile/social-links'
 */
 updateSocialLinks.url = (options?: RouteQueryOptions) => {
@@ -93,7 +93,7 @@ updateSocialLinks.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\ProfileController::updateSocialLinks
-* @see app/Http/Controllers/ProfileController.php:123
+* @see app/Http/Controllers/ProfileController.php:124
 * @route '/profile/social-links'
 */
 updateSocialLinks.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -103,7 +103,7 @@ updateSocialLinks.post = (options?: RouteQueryOptions): RouteDefinition<'post'> 
 
 /**
 * @see \App\Http\Controllers\ProfileController::downloadData
-* @see app/Http/Controllers/ProfileController.php:139
+* @see app/Http/Controllers/ProfileController.php:140
 * @route '/profile/download-data'
 */
 export const downloadData = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -118,7 +118,7 @@ downloadData.definition = {
 
 /**
 * @see \App\Http\Controllers\ProfileController::downloadData
-* @see app/Http/Controllers/ProfileController.php:139
+* @see app/Http/Controllers/ProfileController.php:140
 * @route '/profile/download-data'
 */
 downloadData.url = (options?: RouteQueryOptions) => {
@@ -127,7 +127,7 @@ downloadData.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\ProfileController::downloadData
-* @see app/Http/Controllers/ProfileController.php:139
+* @see app/Http/Controllers/ProfileController.php:140
 * @route '/profile/download-data'
 */
 downloadData.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -137,7 +137,7 @@ downloadData.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\ProfileController::downloadData
-* @see app/Http/Controllers/ProfileController.php:139
+* @see app/Http/Controllers/ProfileController.php:140
 * @route '/profile/download-data'
 */
 downloadData.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -147,7 +147,7 @@ downloadData.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\ProfileController::destroy
-* @see app/Http/Controllers/ProfileController.php:179
+* @see app/Http/Controllers/ProfileController.php:180
 * @route '/profile'
 */
 export const destroy = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -162,7 +162,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\ProfileController::destroy
-* @see app/Http/Controllers/ProfileController.php:179
+* @see app/Http/Controllers/ProfileController.php:180
 * @route '/profile'
 */
 destroy.url = (options?: RouteQueryOptions) => {
@@ -171,7 +171,7 @@ destroy.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\ProfileController::destroy
-* @see app/Http/Controllers/ProfileController.php:179
+* @see app/Http/Controllers/ProfileController.php:180
 * @route '/profile'
 */
 destroy.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -243,7 +243,7 @@ show.head = (args: { username: string | number } | [username: string | number ] 
 
 /**
 * @see \App\Http\Controllers\ProfileController::explore
-* @see app/Http/Controllers/ProfileController.php:157
+* @see app/Http/Controllers/ProfileController.php:158
 * @route '/u/explore'
 */
 export const explore = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -258,7 +258,7 @@ explore.definition = {
 
 /**
 * @see \App\Http\Controllers\ProfileController::explore
-* @see app/Http/Controllers/ProfileController.php:157
+* @see app/Http/Controllers/ProfileController.php:158
 * @route '/u/explore'
 */
 explore.url = (options?: RouteQueryOptions) => {
@@ -267,7 +267,7 @@ explore.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\ProfileController::explore
-* @see app/Http/Controllers/ProfileController.php:157
+* @see app/Http/Controllers/ProfileController.php:158
 * @route '/u/explore'
 */
 explore.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -277,7 +277,7 @@ explore.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\ProfileController::explore
-* @see app/Http/Controllers/ProfileController.php:157
+* @see app/Http/Controllers/ProfileController.php:158
 * @route '/u/explore'
 */
 explore.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({

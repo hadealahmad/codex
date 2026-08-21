@@ -20,8 +20,11 @@ class FollowController extends Controller
         if ($authUser->following()->where('following_id', $user->id)->exists()) {
             $authUser->following()->detach($user->id);
         } else {
-            $authUser->following()->attach($user->id);
-            $user->notify(new NewFollower($authUser));
+            $newlyAttached = $authUser->following()->syncWithoutDetaching([$user->id])['attached'] === [$user->id];
+
+            if ($newlyAttached) {
+                $user->notify(new NewFollower($authUser));
+            }
         }
 
         // Keep sidebar recommendations stable after follow/unfollow to allow immediate undo

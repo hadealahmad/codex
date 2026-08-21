@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
+use App\Services\FeedService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class FeedController extends Controller
 {
+    public function __construct(protected FeedService $feedService)
+    {
+    }
+
     public function index(Request $request)
     {
         $user = Auth::user();
@@ -21,15 +25,7 @@ class FeedController extends Controller
             return redirect()->route('login');
         }
 
-        $query = Post::with(['user' => function($q) use ($user) {
-                $q->withExists(['followers as is_following' => function($fq) use ($user) {
-                    $fq->where('follower_id', $user ? $user->id : 0);
-                }]);
-            }])
-            ->withCount('likes')
-            ->withExists(['likes as is_liked' => function($q) use ($user) {
-                $q->where('user_id', $user ? $user->id : 0);
-            }]);
+        $query = $this->feedService->feedQuery($user);
 
         if ($tab === 'following') {
             $query->whereIn('user_id', $followingIds->concat([$user->id]));
@@ -42,16 +38,8 @@ class FeedController extends Controller
         $keepRecommendations = $request->boolean('keep_recommendations')
             || $request->session()->pull('feed_keep_recommendations', false);
 
-        $shouldRegenerate = !$keepRecommendations || empty($recommendedIds) || !is_array($recommendedIds);
-
-        if ($shouldRegenerate) {
-            $recommendedIds = \App\Models\User::where('is_verified', true)
-                ->where('id', '!=', $user ? $user->id : 0)
-                ->when($followingIds->isNotEmpty(), function($q) use ($followingIds) {
-                    $q->whereNotIn('id', $followingIds);
-                })
-                ->inRandomOrder()
-                ->take(5)
+        if (!$keepRecommendations || empty($recommendedIds) || !is_array($recommendedIds)) {
+            $recommendedIds = $this->feedService->recommendedUsers($user, $followingIds)
                 ->pluck('id')
                 ->toArray();
 
@@ -62,29 +50,18 @@ class FeedController extends Controller
         $request->session()->save();
 
         $recommendedUsers = \App\Models\User::whereIn('id', $recommendedIds)
-            ->withExists(['followers as is_following' => function($q) use ($user) {
-                $q->where('follower_id', $user ? $user->id : 0);
+            ->withExists(['followers as is_following' => function ($q) use ($user) {
+                $q->where('follower_id', $user?->id ?? 0);
             }])
             ->get()
-            ->sortBy(function($u) use ($recommendedIds) {
-                return array_search($u->id, $recommendedIds);
-            })
+            ->sortBy(fn ($u) => array_search($u->id, $recommendedIds))
             ->values();
-
-        $topRepos = \App\Models\Repo::where('is_own_repo', true)
-            ->whereHas('user', function($q) {
-                $q->where('is_verified', true);
-            })
-            ->orderBy('stars', 'desc')
-            ->with('user')
-            ->take(10)
-            ->get();
 
         return Inertia::render('Feed', [
             'posts' => $posts,
             'tab' => $tab,
             'recommendedUsers' => $recommendedUsers,
-            'topRepos' => $topRepos,
+            'topRepos' => $this->feedService->topRepos(),
         ]);
     }
 }

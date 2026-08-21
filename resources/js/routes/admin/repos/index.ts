@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\AdminController::deleteMethod
-* @see app/Http/Controllers/AdminController.php:232
+* @see app/Http/Controllers/AdminController.php:191
 * @route '/admin/repos/{id}'
 */
 export const deleteMethod = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -16,7 +16,7 @@ deleteMethod.definition = {
 
 /**
 * @see \App\Http\Controllers\AdminController::deleteMethod
-* @see app/Http/Controllers/AdminController.php:232
+* @see app/Http/Controllers/AdminController.php:191
 * @route '/admin/repos/{id}'
 */
 deleteMethod.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -43,7 +43,7 @@ deleteMethod.url = (args: { id: string | number } | [id: string | number ] | str
 
 /**
 * @see \App\Http\Controllers\AdminController::deleteMethod
-* @see app/Http/Controllers/AdminController.php:232
+* @see app/Http/Controllers/AdminController.php:191
 * @route '/admin/repos/{id}'
 */
 deleteMethod.delete = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({

@@ -15,6 +15,10 @@ class PostObserver
     {
         // Only run this heavy logic if the 'body_markdown' has actually changed
         if ($post->isDirty('body_markdown')) {
+            if (!$post->user) {
+                return;
+            }
+
             // 1. Convert Markdown to HTML
             $post->body_html = Str::markdown($post->body_markdown);
 
@@ -26,7 +30,7 @@ class PostObserver
             $post->reading_time = ceil($wordCount / 200);
 
             if (!$post->canonical_url) {
-                $post->canonical_url = redirect()->route('posts.show', ['username' => $post->user->username, 'slug' => $post->slug])->getTargetUrl();
+                $post->canonical_url = route('posts.show', ['username' => $post->user->username, 'slug' => $post->slug]);
             }
 
             // 4. Create an automatic excerpt if one wasn't provided manually

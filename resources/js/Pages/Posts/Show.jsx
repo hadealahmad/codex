@@ -287,7 +287,7 @@ export default function Show({ post }) {
                                                 </div>
                                             </Link>
 
-                                            {(auth.user && (auth.user.id === comment.user_id || auth.user.username === 'hadealahmad')) && (
+                                            {(auth.user && (auth.user.id === comment.user_id || auth.user.is_admin)) && (
                                                 <Button
                                                     variant="ghost"
                                                     size="icon"

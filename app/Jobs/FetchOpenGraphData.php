@@ -30,7 +30,11 @@ class FetchOpenGraphData implements ShouldQueue
         }
 
         $url = $matches[0];
-        
+
+        if (!$this->isSafeUrl($url)) {
+            return;
+        }
+
         try {
             $response = Http::timeout(5)->get($url);
             
@@ -63,6 +67,23 @@ class FetchOpenGraphData implements ShouldQueue
         }
     }
 
+    private function isSafeUrl(string $url): bool
+    {
+        $parts = parse_url($url);
+
+        if (!$parts || !in_array($parts['scheme'] ?? '', ['http', 'https'], true) || empty($parts['host'])) {
+            return false;
+        }
+
+        $ip = gethostbyname($parts['host']);
+
+        if ($ip === $parts['host']) {
+            return false;
+        }
+
+        return (bool) filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
+    }
+
     private function getMetaTag($html, $property)
     {
         preg_match('/<meta[^>]+property="' . preg_quote($property, '/') . '"[^>]+content="([^"]+)"/i', $html, $matches);
@@ -73,5 +94,9 @@ class FetchOpenGraphData implements ShouldQueue
         // Try name attribute as fallback
         preg_match('/<meta[^>]+name="' . preg_quote($property, '/') . '"[^>]+content="([^"]+)"/i', $html, $matches);
         return $matches[1] ?? null;
+    }
+    public function failed(\Throwable $e): void
+    {
+        Log::error('FetchOpenGraphData permanently failed: ' . $e->getMessage());
     }
 }

@@ -31,6 +31,9 @@ class ImageService
 
         $image = $this->manager->read($file);
 
+        // Cap dimensions to avoid decoding huge images at full resolution
+        $image->scaleDown(width: 2000, height: 2000);
+
         // Strip metadata and encode to WebP
         $encoded = $image->toWebp($quality);
 

@@ -59,7 +59,7 @@ follow.post = (args: { user: number | { id: number } } | [user: number | { id: n
 
 /**
 * @see \App\Http\Controllers\ProfileController::explore
-* @see app/Http/Controllers/ProfileController.php:157
+* @see app/Http/Controllers/ProfileController.php:158
 * @route '/u/explore'
 */
 export const explore = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -74,7 +74,7 @@ explore.definition = {
 
 /**
 * @see \App\Http\Controllers\ProfileController::explore
-* @see app/Http/Controllers/ProfileController.php:157
+* @see app/Http/Controllers/ProfileController.php:158
 * @route '/u/explore'
 */
 explore.url = (options?: RouteQueryOptions) => {
@@ -83,7 +83,7 @@ explore.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\ProfileController::explore
-* @see app/Http/Controllers/ProfileController.php:157
+* @see app/Http/Controllers/ProfileController.php:158
 * @route '/u/explore'
 */
 explore.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -93,7 +93,7 @@ explore.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\ProfileController::explore
-* @see app/Http/Controllers/ProfileController.php:157
+* @see app/Http/Controllers/ProfileController.php:158
 * @route '/u/explore'
 */
 explore.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
